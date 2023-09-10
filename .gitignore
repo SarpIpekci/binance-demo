@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/BinanceDemoUI/node_modules
+/BinanceReactDemo/.vs
+/BinanceReactDemo/BinanceReactDemo.API/bin/Debug/net6.0
+/BinanceReactDemo/BinanceReactDemo.API/obj
