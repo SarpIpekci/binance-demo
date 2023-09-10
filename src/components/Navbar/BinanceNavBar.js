@@ -2,8 +2,8 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import "../Navbar/BinanceNavBar.css";
+import { NavLink } from "react-router-dom";
 
 function ProductNavbar() {
   return (
@@ -30,12 +30,9 @@ function ProductNavbar() {
             </Nav.Link>
           </Nav>
           <Form className="d-flex">
-            <Button
-              className="login-button"
-              as="input"
-              type="button"
-              value="Login"
-            />
+            <NavLink className="login-button btn btn-primary" to="/SignIn">
+              Login
+            </NavLink>
           </Form>
         </Navbar.Collapse>
       </Container>
