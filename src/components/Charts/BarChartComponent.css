@@ -1,6 +1,6 @@
 .test {
   display: flex;
   justify-content: center;
-  width: 60%;
-  height: 65%;
+  width: 50% !important;
+  height: 60% !important;
 }
