@@ -20,15 +20,12 @@ function request(url, data = false, method = "GET", type = "FORM_DATA") {
             }
           : {};
     }
-    console.log(options);
-    console.log(url);
-    console.log(data);
 
     const response = await fetch(
       process.env.REACT_APP_API_BASEURL + url,
       options
     );
-    console.log(response);
+
     const result = await response.json();
 
     if (response.ok) {

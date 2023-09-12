@@ -3,15 +3,15 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import "../Navbar/BinanceNavBar.css";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function ProductNavbar() {
   return (
     <Navbar expand="lg" className="navbar">
       <Container fluid>
-        <Navbar.Brand className="company-name" href="#">
+        <Nav.Link as={Link} to="/" className="company-name">
           <label className="company-name">Binance</label>
-        </Navbar.Brand>
+        </Nav.Link>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav

@@ -46,7 +46,7 @@ namespace BinanceReactDemo.API.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { message = "User not exists" });
+                    return BadRequest(new { message = "User is not exists" });
                 }
             }
             catch (Exception exception)

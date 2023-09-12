@@ -1,0 +1,8 @@
+.modal-content {
+  max-height: 580vh;
+  overflow-y: auto;
+}
+
+.modal-content {
+  text-align: center;
+}
