@@ -6,6 +6,7 @@
   font-family: "Times New Roman", Times, serif;
   font-size: large;
   color: #fbe4d8;
+  cursor: pointer;
 }
 
 .company-name:hover {
