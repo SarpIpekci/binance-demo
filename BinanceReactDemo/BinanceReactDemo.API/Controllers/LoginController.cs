@@ -16,6 +16,9 @@ namespace BinanceReactDemo.API.Controllers
         private readonly SignInValidation _signInValidation;
         private readonly SignUpValidation _signUpValidation;
 
+        private const string _validation = "validation";
+        private const string _exception = "exception";
+
         public LoginController(ISignInRepository signInRepository, ISignUpRepository signUpRepository, SignInValidation signInValidation, SignUpValidation signUpValidation)
         {
             _signInRepository = signInRepository;
@@ -24,7 +27,7 @@ namespace BinanceReactDemo.API.Controllers
             _signUpValidation = signUpValidation;
         }
 
-        [HttpPost("signin")]
+        [HttpPost("signIn")]
         public async Task<IActionResult> SignIn([FromBody] SignInDto request)
         {
             try
@@ -35,7 +38,7 @@ namespace BinanceReactDemo.API.Controllers
 
                 if (!validationResult.IsValid)
                 {
-                    return BadRequest(new { message = errorMessages });
+                    return BadRequest(new { message = errorMessages, errorCode = _validation });
                 }
 
                 var (checkUserExists, id) = await _signInRepository.CustomerLogin(request);
@@ -46,16 +49,16 @@ namespace BinanceReactDemo.API.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { message = "User is not exists" });
+                    return BadRequest(new { message = "Username or Password is wrong." });
                 }
             }
             catch (Exception exception)
             {
-                return BadRequest(new { message = exception.Message });
+                return BadRequest(new { message = exception.Message, errorCode = _exception });
             }
         }
 
-        [HttpPost("signup")]
+        [HttpPost("signUp")]
         public async Task<IActionResult> SignUp([FromBody] SignUpDto request)
         {
             try
@@ -77,7 +80,7 @@ namespace BinanceReactDemo.API.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { message = "Username is available." });
+                    return BadRequest(new { message = "User is available." });
                 }
             }
             catch (Exception exception)
