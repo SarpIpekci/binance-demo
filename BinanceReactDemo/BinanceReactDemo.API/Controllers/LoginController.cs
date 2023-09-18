@@ -1,9 +1,8 @@
 ﻿using BinanceReactDemo.API.DataTransferObject;
 using BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface;
-using BinanceReactDemo.API.Validation.SignIn;
+using BinanceReactDemo.API.Validation;
 using BinanceReactDemo.API.Validation.SignUp;
 using Microsoft.AspNetCore.Mvc;
-using BinanceReactDemo.API.Validation;
 
 namespace BinanceReactDemo.API.Controllers
 {
@@ -13,17 +12,15 @@ namespace BinanceReactDemo.API.Controllers
     {
         private readonly ISignInRepository _signInRepository;
         private readonly ISignUpRepository _signUpRepository;
-        private readonly SignInValidation _signInValidation;
         private readonly SignUpValidation _signUpValidation;
 
         private const string _validation = "validation";
         private const string _exception = "exception";
 
-        public LoginController(ISignInRepository signInRepository, ISignUpRepository signUpRepository, SignInValidation signInValidation, SignUpValidation signUpValidation)
+        public LoginController(ISignInRepository signInRepository, ISignUpRepository signUpRepository, SignUpValidation signUpValidation)
         {
             _signInRepository = signInRepository;
             _signUpRepository = signUpRepository;
-            _signInValidation = signInValidation;
             _signUpValidation = signUpValidation;
         }
 
@@ -32,20 +29,11 @@ namespace BinanceReactDemo.API.Controllers
         {
             try
             {
-                var validationResult = _signInValidation.Validate(request);
-
-                var errorMessages = ValidationMessages.ValidationResults(validationResult);
-
-                if (!validationResult.IsValid)
-                {
-                    return BadRequest(new { message = errorMessages, errorCode = _validation });
-                }
-
-                var (checkUserExists, id) = await _signInRepository.CustomerLogin(request);
+                var (checkUserExists, result) = await _signInRepository.CustomerLogin(request);
 
                 if (checkUserExists)
                 {
-                    return Ok(id);
+                    return Ok(result);
                 }
                 else
                 {

@@ -25,13 +25,13 @@ namespace BinanceReactDemo.API.Repostories.SignIn_SignUp.Abstract
         /// <param name="signInDto">Sign In Dto</param>
         /// <returns>True Or False</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        public async Task<(bool checkUserExists, int id)> CustomerLogin(SignInDto signInDto)
+        public async Task<(bool checkUserExists, SignInRequestDto)> CustomerLogin(SignInDto signInDto)
         {
             try
             {
                 const string checkUsernameQuery = "SELECT COUNT(*) FROM Customer WHERE Username = @username AND Password = @password";
 
-                const string customerIdQuery = "SELECT Id as id FROM Customer WHERE Username = @username AND Password = @password";
+                const string customerIdQuery = "SELECT Id, Username FROM Customer WHERE Username = @username AND Password = @password";
 
                 var checkUsernameParameters = new DynamicParameters();
                 checkUsernameParameters.Add("@username", signInDto.Username, DbType.String);
@@ -40,15 +40,15 @@ namespace BinanceReactDemo.API.Repostories.SignIn_SignUp.Abstract
                 using var connection = _context.CreateConnection();
                 var existingUser = await connection.ExecuteScalarAsync<int>(checkUsernameQuery, checkUsernameParameters);
 
-                var customerId = connection.Query<int>(customerIdQuery, checkUsernameParameters).FirstOrDefault();
+                var result = connection.QueryFirstOrDefault<SignInRequestDto>(customerIdQuery, checkUsernameParameters);
 
                 if (existingUser > 0)
                 {
-                    return (true, customerId);
+                    return (true, result);
                 }
                 else
                 {
-                    return (false, customerId);
+                    return (false, result);
                 }
             }
             catch (Exception exception)

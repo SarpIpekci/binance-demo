@@ -5,6 +5,8 @@ import { Card, Form, Button } from "react-bootstrap";
 import LoadingModalComponents from "../../Modals/LoadingModals/LoadingModalComponent";
 import { useNavigate, NavLink } from "react-router-dom";
 import SwalComponent from "../../Swals/SwalComponent";
+import { encryptData } from "../../../EncryptionUtils/EncryptionUtility";
+import { GenerateStrongKey } from "../../../GenerateKey/EncryptionKey ";
 
 const SignInComponent = () => {
   const navigate = useNavigate();
@@ -35,7 +37,9 @@ const SignInComponent = () => {
     setIsLoading(true);
     AuthService.signIn(username, password)
       .then((rest) => {
-        console.log(rest);
+        const jsonData = JSON.stringify(rest);
+        const encryptedData = encryptData(jsonData, GenerateStrongKey(32));
+        localStorage.setItem("userData", encryptedData);
         setTimeout(() => {
           setIsLoading(false);
           setShowModal(false);

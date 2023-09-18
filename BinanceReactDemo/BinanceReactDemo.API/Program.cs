@@ -11,7 +11,6 @@ using BinanceReactDemo.API.Repostories.SignIn_SignUp.Abstract;
 using BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface;
 using BinanceReactDemo.API.Validation.BuyCoin;
 using BinanceReactDemo.API.Validation.SellCoin;
-using BinanceReactDemo.API.Validation.SignIn;
 using BinanceReactDemo.API.Validation.SignUp;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +24,6 @@ builder.Services.AddScoped<ISignUpRepository, SignUpRepository>();
 builder.Services.AddScoped<IBuyCoinRepository, BuyCoinRepository>();
 builder.Services.AddScoped<ISellCoinRepository, SellCoinRepository>();
 builder.Services.AddScoped<ICustomerCoinTables, CustomerCoinTables>();
-builder.Services.AddScoped<SignInValidation>();
 builder.Services.AddScoped<SignUpValidation>();
 builder.Services.AddScoped<BuyCoinValidation>();
 builder.Services.AddScoped<SellCoinValidation>();

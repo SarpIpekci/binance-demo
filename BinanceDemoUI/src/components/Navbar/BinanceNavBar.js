@@ -2,10 +2,24 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import "../Navbar/BinanceNavBar.css";
 import { Link, NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { DecryptData } from "../../DencryptionUtils/DencryptionUtility";
 
-function ProductNavbar() {
+function ProductNavbar({ userData }) {
+  let parsedData;
+  if (userData != null) {
+    const decrypt = DecryptData(userData);
+    parsedData = JSON.parse(decrypt);
+  }
+
+  const handleLogout = () => {
+    localStorage.clear();
+  };
+
   return (
     <Navbar expand="lg" className="navbar">
       <Container fluid>
@@ -19,20 +33,49 @@ function ProductNavbar() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="#action1">
-              <label className="labels">Buy Coin</label>
-            </Nav.Link>
-            <Nav.Link href="#action2">
-              <label className="labels">Sell Coin</label>
-            </Nav.Link>
-            <Nav.Link href="#action3">
-              <label className="labels">Show Coin</label>
-            </Nav.Link>
+            {userData && (
+              <>
+                <Nav.Link href="#action1">
+                  <label className="labels">Buy Coin</label>
+                </Nav.Link>
+                <Nav.Link href="#action2">
+                  <label className="labels">Sell Coin</label>
+                </Nav.Link>
+                <Nav.Link href="#action3">
+                  <label className="labels">Show Coin</label>
+                </Nav.Link>
+              </>
+            )}
           </Nav>
-          <Form className="d-flex">
-            <NavLink className="login-button btn btn-primary" to="/SignIn">
-              Login
-            </NavLink>
+          <Form className="inline">
+            <Row>
+              {userData ? (
+                <>
+                  <Col xs="auto">
+                    <label className="welcome-label" style={{ color: "white" }}>
+                      Welcome: {parsedData.username}
+                    </label>
+                  </Col>
+                  <Col xs="auto">
+                    <button
+                      className="login-button btn btn-primary"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </Col>
+                </>
+              ) : (
+                <Col xs="auto">
+                  <NavLink
+                    className="login-button btn btn-primary"
+                    to="/SignIn"
+                  >
+                    Login
+                  </NavLink>
+                </Col>
+              )}
+            </Row>
           </Form>
         </Navbar.Collapse>
       </Container>
