@@ -12,7 +12,7 @@ import {
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const BarChartComponent = () => {
+const BarChartComponent = ({ setUserData }) => {
   const chartReference = useRef(null);
 
   const [data, setData] = useState({
@@ -21,6 +21,8 @@ const BarChartComponent = () => {
   });
 
   useEffect(() => {
+    setUserData(localStorage.getItem("userData"));
+
     const connection = new HubConnectionBuilder()
       .withUrl("https://localhost:7159/BinanceHub", {
         withCredentials: true,

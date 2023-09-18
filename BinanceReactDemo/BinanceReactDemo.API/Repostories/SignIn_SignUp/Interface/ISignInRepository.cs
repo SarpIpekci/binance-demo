@@ -12,6 +12,6 @@ namespace BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface
         /// </summary>
         /// <param name="signInDto">Sign In Dto</param>
         /// <returns>True Or False</returns>
-        public Task<(bool checkUserExists, int id)> CustomerLogin(SignInDto signInDto);
+        public Task<(bool checkUserExists, SignInRequestDto)> CustomerLogin(SignInDto signInDto);
     }
 }
