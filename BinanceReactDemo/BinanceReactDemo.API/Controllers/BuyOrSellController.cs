@@ -41,17 +41,7 @@ namespace BinanceReactDemo.API.Controllers
                     return BadRequest(new { message = errorMessages });
                 }
 
-                var generateCoin = new BuyCoinModel
-                {
-                    CustomerId = request.CustomerId,
-                    CoinName = request.CoinName,
-                    CoinValue = request.CoinValue,
-                    CustomerBuyValue = request.CustomerBuyValue,
-                    SumOfValue = (request.CoinValue * request.CustomerBuyValue).ToString(),
-                    BuyDate = request.BuyDate,
-                };
-
-                var isSuccess = await _buyCoinForCustomer.BuyCoins(generateCoin);
+                var isSuccess = await _buyCoinForCustomer.BuyCoins(request);
 
                 if (isSuccess)
                 {

@@ -153,7 +153,7 @@ const SignUpComponent = () => {
         errorMessages={errorMessages}
         title={title}
         icon={icon}
-      ></SwalComponent>
+      />
     </div>
   );
 };

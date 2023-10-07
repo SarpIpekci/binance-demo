@@ -1,0 +1,40 @@
+.dropdown-menu {
+  max-height: 150px !important;
+  overflow-y: auto !important;
+}
+
+.modal-container {
+  padding: 20px !important;
+}
+
+.dropdown-toggle {
+  background-color: #f8f9fa !important;
+  border-color: #ced4da !important;
+  color: #000 !important;
+}
+
+.dropdown-toggle:hover {
+  background-color: #e2e6ea !important;
+}
+
+.label-style {
+  color: red !important;
+}
+
+.input-group {
+  margin-bottom: 15px !important;
+}
+
+.submit-button {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.submit-button:hover {
+  background-color: #218838 !important;
+}
+
+.disabled-input {
+  background-color: #f8f9fa !important;
+}

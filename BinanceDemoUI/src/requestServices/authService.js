@@ -1,4 +1,5 @@
 import { postJSON } from "./request";
+import { get } from "./request";
 
 export const signIn = (username, password) =>
   postJSON("Login/signIn", { Username: username, Password: password });
@@ -16,4 +17,21 @@ export const signUp = (
     Username: username,
     Password: password,
     PasswordRepeats: passwordRepeat,
+  });
+
+export const fillModal = () => get("Modal/fillModal");
+
+export const buy = (
+  customerId,
+  coinName,
+  coinValue,
+  customerBuyValue,
+  sumOfValue
+) =>
+  postJSON("BuyOrSell/buy", {
+    CustomerId: customerId,
+    CoinName: coinName,
+    CoinValue: coinValue,
+    CustomerBuyValue: customerBuyValue,
+    SumOfValue: sumOfValue,
   });
