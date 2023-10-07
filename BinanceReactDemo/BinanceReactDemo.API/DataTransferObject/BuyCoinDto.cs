@@ -26,6 +26,11 @@
         public double CustomerBuyValue { get; set; }
 
         /// <summary>
+        /// CoinValue * CustomerBuyValue
+        /// </summary>
+        public double SumOfValue { get; set; }
+
+        /// <summary>
         /// Buy Date
         /// </summary>
         public DateTime BuyDate { get; set; } = DateTime.Now;

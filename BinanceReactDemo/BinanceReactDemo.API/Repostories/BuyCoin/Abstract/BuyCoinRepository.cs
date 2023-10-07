@@ -1,8 +1,8 @@
 ﻿using BinanceReactDemo.API.Context;
+using BinanceReactDemo.API.DataTransferObject;
 using BinanceReactDemo.API.Repostories.BuyCoin.Interfaces;
 using Dapper;
 using System.Data;
-using BinanceReactDemo.API.Models.BuyCoin;
 
 namespace BinanceReactDemo.API.Repostories.BuyCoin.Abstract
 {
@@ -19,7 +19,7 @@ namespace BinanceReactDemo.API.Repostories.BuyCoin.Abstract
         /// <param name="context">Db Context</param>
         public BuyCoinRepository(DapperContext context) => _context = context;
 
-        public async Task<bool> BuyCoins(BuyCoinModel buyCoin)
+        public async Task<bool> BuyCoins(BuyCoinDto buyCoin)
         {
             try
             {

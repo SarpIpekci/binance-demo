@@ -3,6 +3,7 @@ using BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface;
 using BinanceReactDemo.API.Validation;
 using BinanceReactDemo.API.Validation.SignUp;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BinanceReactDemo.API.Controllers
 {
@@ -14,7 +15,6 @@ namespace BinanceReactDemo.API.Controllers
         private readonly ISignUpRepository _signUpRepository;
         private readonly SignUpValidation _signUpValidation;
 
-        private const string _validation = "validation";
         private const string _exception = "exception";
 
         public LoginController(ISignInRepository signInRepository, ISignUpRepository signUpRepository, SignUpValidation signUpValidation)
@@ -34,6 +34,12 @@ namespace BinanceReactDemo.API.Controllers
                 if (checkUserExists)
                 {
                     return Ok(result);
+                }
+                else if (request.Password.IsNullOrEmpty())
+                {
+
+                    return BadRequest(new { message = "Username or Password is Blank" });
+
                 }
                 else
                 {

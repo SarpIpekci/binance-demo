@@ -1,4 +1,4 @@
-﻿using BinanceReactDemo.API.Models.BuyCoin;
+﻿using BinanceReactDemo.API.DataTransferObject;
 
 namespace BinanceReactDemo.API.Repostories.BuyCoin.Interfaces
 {
@@ -12,6 +12,6 @@ namespace BinanceReactDemo.API.Repostories.BuyCoin.Interfaces
         /// </summary>
         /// <param name="buyCoin">Buy Coin Dto</param>
         /// <returns>True Or False</returns>
-        public Task<bool> BuyCoins(BuyCoinModel buyCoin);
+        public Task<bool> BuyCoins(BuyCoinDto buyCoin);
     }
 }
