@@ -31,14 +31,42 @@ const SignInComponent = () => {
     setShowModal(false);
   };
 
+  function cleanTurkishCharacters(str) {
+    return str
+      .replace(/İ/g, "I")
+      .replace(/ı/g, "i")
+      .replace(/Ö/g, "O")
+      .replace(/ö/g, "o")
+      .replace(/Ç/g, "C")
+      .replace(/ç/g, "c")
+      .replace(/Ş/g, "S")
+      .replace(/ş/g, "s")
+      .replace(/Ğ/g, "G")
+      .replace(/ğ/g, "g");
+  }
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
     setShowModal(true);
     setIsLoading(true);
+    if (username == null || password == null) {
+      setShowSwal(true);
+      setErrorMessages("Username or Password is required.");
+      setIcon("error");
+      setTitle("Test");
+      setTimeout(() => {
+        setShowSwal(false);
+        setErrorMessages(null);
+      }, 100);
+    }
     AuthService.signIn(username, password)
       .then((rest) => {
         const jsonData = JSON.stringify(rest);
-        const encryptedData = encryptData(jsonData, GenerateStrongKey(32));
+        const replacedTurkishLetter = cleanTurkishCharacters(jsonData);
+        const encryptedData = encryptData(
+          replacedTurkishLetter,
+          GenerateStrongKey(32)
+        );
         localStorage.setItem("userData", encryptedData);
         setTimeout(() => {
           setIsLoading(false);
@@ -51,12 +79,15 @@ const SignInComponent = () => {
         setShowModal(false);
         if (error.response) {
           const { status } = error.response;
-
           if (status === 400) {
             setShowSwal(true);
             setErrorMessages(error.errorCode);
             setIcon("error");
             setTitle("Sign In Problem");
+            setTimeout(() => {
+              setShowSwal(false);
+              setErrorMessages(null);
+            }, 100);
             return;
           }
         } else {
@@ -64,6 +95,10 @@ const SignInComponent = () => {
           setErrorMessages(error.message);
           setIcon("error");
           setTitle("Sign In Problem");
+          setTimeout(() => {
+            setShowSwal(false);
+            setErrorMessages(null);
+          }, 100);
         }
       });
   };
@@ -104,7 +139,9 @@ const SignInComponent = () => {
         <div className="card-footer">
           <div className="d-flex justify-content-center links">
             Don't have an account?
-            <NavLink to="/SignUp">Sign Up</NavLink>
+            <NavLink className="custom-signIn" to="/SignUp">
+              Sign Up
+            </NavLink>
           </div>
         </div>
       </Card>
@@ -118,7 +155,7 @@ const SignInComponent = () => {
         errorMessages={errorMessages}
         title={title}
         icon={icon}
-      ></SwalComponent>
+      />
     </div>
   );
 };

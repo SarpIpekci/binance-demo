@@ -14,4 +14,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BinanceReactDemo.Common\BinanceReactDemo.Common.csproj" />
+    <ProjectReference Include="..\BinanceReactDemo.DataTransferObject\BinanceReactDemo.DataTransferObject.csproj" />
+    <ProjectReference Include="..\BinanceReactDemo.Validation\BinanceReactDemo.Validation.csproj" />
+  </ItemGroup>
+
 </Project>

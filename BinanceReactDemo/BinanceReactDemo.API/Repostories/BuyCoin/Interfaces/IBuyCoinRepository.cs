@@ -1,4 +1,4 @@
-﻿using BinanceReactDemo.API.DataTransferObject;
+﻿using BinanceReactDemo.DataTransferObject.Models;
 
 namespace BinanceReactDemo.API.Repostories.BuyCoin.Interfaces
 {

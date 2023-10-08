@@ -35,3 +35,27 @@ export const buy = (
     CustomerBuyValue: customerBuyValue,
     SumOfValue: sumOfValue,
   });
+
+export const sell = (
+  customerId,
+  coinName,
+  coinValue,
+  customerSellValue,
+  sumOfValue
+) =>
+  postJSON("BuyOrSell/sell", {
+    CustomerId: customerId,
+    CoinName: coinName,
+    CoinValue: coinValue,
+    CustomerSellValue: customerSellValue,
+    SumOfValue: sumOfValue,
+  });
+
+export const fillBuyCoinTable = (customerId) =>
+  get(`CustomerTable/getBuyCoin?customerId=${customerId}`);
+
+export const fillSellCoinTable = (customerId) =>
+  get(`CustomerTable/getSellCoin?customerId=${customerId}`);
+
+export const fillAllCoinTable = (customerId) =>
+  get(`CustomerTable/getAllCoins?customerId=${customerId}`);

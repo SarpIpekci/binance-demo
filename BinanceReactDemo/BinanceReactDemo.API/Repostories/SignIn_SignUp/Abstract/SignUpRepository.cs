@@ -1,6 +1,8 @@
 ﻿using BinanceReactDemo.API.Context;
-using BinanceReactDemo.API.DataTransferObject;
 using BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface;
+using BinanceReactDemo.Common.SqlQueries;
+using BinanceReactDemo.Common.UserInformationSqlErrorMessages;
+using BinanceReactDemo.DataTransferObject.Models;
 using Dapper;
 using System.Data;
 
@@ -13,6 +15,10 @@ namespace BinanceReactDemo.API.Repostories.SignIn_SignUp.Abstract
     {
         private readonly DapperContext _context;
 
+        /// <summary>
+        /// Sign Up Repository
+        /// </summary>
+        /// <param name="context">DapperContext</param>
         public SignUpRepository(DapperContext context) => _context = context;
 
         /// <summary>
@@ -25,14 +31,11 @@ namespace BinanceReactDemo.API.Repostories.SignIn_SignUp.Abstract
         {
             try
             {
-                const string checkUsernameQuery = "SELECT COUNT(*) FROM Customer WHERE Username = @username";
-                const string query = "INSERT INTO Customer(CustomerName,CustomerEmail,Username,Password,PasswordRepeat) VALUES(@customerName,@customerEmail,@username,@password,@passwordRepeat)";
-
                 var checkUsernameParameters = new DynamicParameters();
                 checkUsernameParameters.Add("@username", signUp.Username, DbType.String);
 
                 using var connection = _context.CreateConnection();
-                var existingUserCount = await connection.ExecuteScalarAsync<int>(checkUsernameQuery, checkUsernameParameters);
+                var existingUserCount = await connection.ExecuteScalarAsync<int>(SqlQueries.CheckUsernameSignUpQuery, checkUsernameParameters);
 
                 if (existingUserCount > 0)
                 {
@@ -46,13 +49,13 @@ namespace BinanceReactDemo.API.Repostories.SignIn_SignUp.Abstract
                 parameters.Add("@password", signUp.Password, DbType.String);
                 parameters.Add("@passwordRepeat", signUp.PasswordRepeats, DbType.String);
 
-                var rowAffected = await connection.ExecuteAsync(query, parameters);
+                var rowAffected = await connection.ExecuteAsync(SqlQueries.CreateCustomerQuery, parameters);
 
                 return rowAffected > 0;
             }
             catch (Exception exception)
             {
-                throw new ArgumentException("An error occurred while executing SQL queries.", exception);
+                throw new ArgumentException(UserInformationSqlErrorMessages.SqlError, exception);
             }
         }
     }

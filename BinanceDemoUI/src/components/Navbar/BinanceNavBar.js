@@ -4,16 +4,27 @@ import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import "../Navbar/BinanceNavBar.css";
 import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import { DecryptData } from "../../DencryptionUtils/DencryptionUtility";
 import InputModalComponent from "../Modals/InputModals/InputModalComponent";
 import { AuthService } from "../../requestServices";
+import TableModalComponent from "../Modals/TableModals/TableModalComponent";
 
 function ProductNavbar({ userData }) {
   const [showModal, setShowModal] = useState(false);
   const [binanceItem, setBinanceItem] = useState([]);
+  const [buyOrSellCoinModal, setBuyOrSellCoinModal] = useState();
+  const [modalTitle, setModalTitle] = useState();
+  const [buttonName, setButtonName] = useState();
+  const [showTableModal, setShowTableModal] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+
+  const toggleDetails = () => {
+    setShowDetails(!showDetails);
+  };
 
   let parsedData;
   if (userData != null) {
@@ -25,7 +36,24 @@ function ProductNavbar({ userData }) {
     localStorage.clear();
   };
 
-  const handleShow = () => {
+  const handleShowBuy = () => {
+    handleShowModal(true);
+    setModalTitle("Buy Coin");
+    setButtonName("Buy");
+  };
+
+  const handleShowTable = () => {
+    setShowTableModal(true);
+  };
+
+  const handleShowSell = () => {
+    handleShowModal(false);
+    setModalTitle("Sell Coin");
+    setButtonName("Sell");
+  };
+
+  const handleShowModal = (isBuy) => {
+    setBuyOrSellCoinModal(isBuy);
     AuthService.fillModal()
       .then((rest) => {
         setShowModal(true);
@@ -52,13 +80,13 @@ function ProductNavbar({ userData }) {
             >
               {userData && (
                 <>
-                  <Nav.Link onClick={handleShow}>
+                  <Nav.Link onClick={handleShowBuy}>
                     <label className="labels">Buy Coin</label>
                   </Nav.Link>
-                  <Nav.Link href="#action2">
+                  <Nav.Link onClick={handleShowSell}>
                     <label className="labels">Sell Coin</label>
                   </Nav.Link>
-                  <Nav.Link href="#action3">
+                  <Nav.Link onClick={handleShowTable}>
                     <label className="labels">Show Coin</label>
                   </Nav.Link>
                 </>
@@ -69,12 +97,27 @@ function ProductNavbar({ userData }) {
                 {userData ? (
                   <>
                     <Col xs="auto">
-                      <label
-                        className="welcome-label"
-                        style={{ color: "white" }}
-                      >
-                        Welcome: {parsedData.username}
-                      </label>
+                      <Button variant="primary" onClick={toggleDetails}>
+                        Show Details
+                      </Button>
+                      {showDetails && (
+                        <div>
+                          <label
+                            className="welcome-label"
+                            style={{ color: "white" }}
+                          >
+                            Username: {parsedData.username}
+                          </label>
+                          <br /> <label>----------------------------</label>
+                          <br />{" "}
+                          <label
+                            className="welcome-label"
+                            style={{ color: "white" }}
+                          >
+                            Customer Name: {parsedData.customerName}
+                          </label>
+                        </div>
+                      )}
                     </Col>
                     <Col xs="auto">
                       <button
@@ -101,10 +144,16 @@ function ProductNavbar({ userData }) {
         </Container>
       </Navbar>
       <InputModalComponent
+        buyOrSellCoinModal={buyOrSellCoinModal}
         showModal={showModal}
         setShowModal={setShowModal}
-        modalTitle={"Buy Coin"}
+        modalTitle={modalTitle}
         binanceItem={binanceItem}
+        buttonName={buttonName}
+      />
+      <TableModalComponent
+        showModal={showTableModal}
+        setShowTableModal={setShowTableModal}
       />
     </>
   );
