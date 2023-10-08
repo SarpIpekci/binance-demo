@@ -1,6 +1,8 @@
 ﻿using BinanceReactDemo.API.Context;
-using BinanceReactDemo.API.DataTransferObject;
 using BinanceReactDemo.API.Repostories.BuyCoin.Interfaces;
+using BinanceReactDemo.Common.SqlQueries;
+using BinanceReactDemo.Common.UserInformationSqlErrorMessages;
+using BinanceReactDemo.DataTransferObject.Models;
 using Dapper;
 using System.Data;
 
@@ -19,12 +21,16 @@ namespace BinanceReactDemo.API.Repostories.BuyCoin.Abstract
         /// <param name="context">Db Context</param>
         public BuyCoinRepository(DapperContext context) => _context = context;
 
+        /// <summary>
+        /// Buy Coin
+        /// </summary>
+        /// <param name="buyCoin">Buy Coin Dto</param>
+        /// <returns>True Or False</returns>
+        /// <exception cref="ArgumentException">Exception</exception>
         public async Task<bool> BuyCoins(BuyCoinDto buyCoin)
         {
             try
             {
-                const string query = "INSERT INTO BuyCoin(CustomerId,CoinName,CoinValue,CustomerBuyValue,SumOfValue,BuyDate) VALUES(@customerId,@coinName,@coinValue,@customerBuyValue,@sumOfValue,@buyDate)";
-
                 using var connection = _context.CreateConnection();
 
                 var parameters = new DynamicParameters();
@@ -35,13 +41,13 @@ namespace BinanceReactDemo.API.Repostories.BuyCoin.Abstract
                 parameters.Add("@sumOfValue", buyCoin.SumOfValue, DbType.String);
                 parameters.Add("@buyDate", buyCoin.BuyDate, DbType.DateTime);
 
-                var rowAffected = await connection.ExecuteAsync(query, parameters);
+                var rowAffected = await connection.ExecuteAsync(SqlQueries.BuyCoinsQuery, parameters);
 
                 return rowAffected > 0;
             }
             catch (Exception exception)
             {
-                throw new ArgumentException("An error occurred while executing SQL queries.", exception);
+                throw new ArgumentException(UserInformationSqlErrorMessages.SqlError, exception);
             }
         }
     }

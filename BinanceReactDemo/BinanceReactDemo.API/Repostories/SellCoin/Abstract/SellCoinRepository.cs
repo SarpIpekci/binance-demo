@@ -1,11 +1,16 @@
 ﻿using BinanceReactDemo.API.Context;
-using BinanceReactDemo.API.Models.SellCoin;
 using BinanceReactDemo.API.Repostories.SellCoin.Interfaces;
+using BinanceReactDemo.Common.SqlQueries;
+using BinanceReactDemo.Common.UserInformationSqlErrorMessages;
+using BinanceReactDemo.DataTransferObject.Models;
 using Dapper;
 using System.Data;
 
 namespace BinanceReactDemo.API.Repostories.SellCoin.Abstract
 {
+    /// <summary>
+    /// Sell Coin Repository
+    /// </summary>
     public class SellCoinRepository : ISellCoinRepository
     {
         private readonly DapperContext _context;
@@ -16,12 +21,16 @@ namespace BinanceReactDemo.API.Repostories.SellCoin.Abstract
         /// <param name="context">Db Context</param>
         public SellCoinRepository(DapperContext context) => _context = context;
 
-        public async Task<bool> SellCoins(SellCoinModel sellCoin)
+        /// <summary>
+        /// Sell Coins
+        /// </summary>
+        /// <param name="sellCoin">Sell Coin Dto</param>
+        /// <returns>True Or False</returns>
+        /// <exception cref="ArgumentException">Exception</exception>
+        public async Task<bool> SellCoins(SellCoinDto sellCoin)
         {
             try
             {
-                const string query = "INSERT INTO SellCoin(CustomerId,CoinName,CoinValue,CustomerSellValue,SumOfValue,SellDate) VALUES(@customerId,@coinName,@coinValue,@customerSellValue,@sumOfValue,@sellDate)";
-
                 using var connection = _context.CreateConnection();
 
                 var parameters = new DynamicParameters();
@@ -32,13 +41,13 @@ namespace BinanceReactDemo.API.Repostories.SellCoin.Abstract
                 parameters.Add("@sumOfValue", sellCoin.SumOfValue, DbType.String);
                 parameters.Add("@sellDate", sellCoin.SellDate, DbType.DateTime);
 
-                var rowAffected = await connection.ExecuteAsync(query, parameters);
+                var rowAffected = await connection.ExecuteAsync(SqlQueries.SellCoinsQuery, parameters);
 
                 return rowAffected > 0;
             }
             catch (Exception exception)
             {
-                throw new ArgumentException("An error occurred while executing SQL queries.", exception);
+                throw new ArgumentException(UserInformationSqlErrorMessages.SqlError, exception);
             }
         }
     }

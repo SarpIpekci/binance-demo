@@ -1,9 +1,11 @@
-﻿using BinanceReactDemo.API.DataTransferObject;
-using BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface;
-using BinanceReactDemo.API.Validation;
-using BinanceReactDemo.API.Validation.SignUp;
+﻿using BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface;
+using BinanceReactDemo.Common.UserInformatiomErrorMessages;
+using BinanceReactDemo.Common.UserInformationMessages;
+using BinanceReactDemo.DataTransferObject.Models;
+using BinanceReactDemo.Validation;
+using BinanceReactDemo.Validation.SignIn;
+using BinanceReactDemo.Validation.SignUp;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace BinanceReactDemo.API.Controllers
 {
@@ -14,14 +16,16 @@ namespace BinanceReactDemo.API.Controllers
         private readonly ISignInRepository _signInRepository;
         private readonly ISignUpRepository _signUpRepository;
         private readonly SignUpValidation _signUpValidation;
+        private readonly SignInValidation _signInValidation;
 
         private const string _exception = "exception";
 
-        public LoginController(ISignInRepository signInRepository, ISignUpRepository signUpRepository, SignUpValidation signUpValidation)
+        public LoginController(ISignInRepository signInRepository, ISignUpRepository signUpRepository, SignUpValidation signUpValidation, SignInValidation signInValidation)
         {
             _signInRepository = signInRepository;
             _signUpRepository = signUpRepository;
             _signUpValidation = signUpValidation;
+            _signInValidation = signInValidation;
         }
 
         [HttpPost("signIn")]
@@ -29,21 +33,24 @@ namespace BinanceReactDemo.API.Controllers
         {
             try
             {
+                var validationResult = _signInValidation.Validate(request);
+
+                var errorMessages = ValidationMessages.ValidationResults(validationResult);
+
+                if (!validationResult.IsValid)
+                {
+                    return BadRequest(new { message = errorMessages });
+                }
+
                 var (checkUserExists, result) = await _signInRepository.CustomerLogin(request);
 
                 if (checkUserExists)
                 {
                     return Ok(result);
                 }
-                else if (request.Password.IsNullOrEmpty())
-                {
-
-                    return BadRequest(new { message = "Username or Password is Blank" });
-
-                }
                 else
                 {
-                    return BadRequest(new { message = "Username or Password is wrong." });
+                    return BadRequest(new { message = UserInformationErrorMessages.SignInError });
                 }
             }
             catch (Exception exception)
@@ -70,11 +77,11 @@ namespace BinanceReactDemo.API.Controllers
 
                 if (isSuccess)
                 {
-                    return Ok(new { message = "User created successfully." });
+                    return Ok(new { message = UserInformationMessages.SignUpUser });
                 }
                 else
                 {
-                    return BadRequest(new { message = "User is available." });
+                    return BadRequest(new { message = UserInformationErrorMessages.SignUpError });
                 }
             }
             catch (Exception exception)

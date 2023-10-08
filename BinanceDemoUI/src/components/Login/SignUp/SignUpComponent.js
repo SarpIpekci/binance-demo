@@ -75,6 +75,10 @@ const SignUpComponent = () => {
             setErrorMessages(error.errorCode);
             setTitle("Sign Up Problem");
             setIcon("error");
+            setTimeout(() => {
+              setShowSwal(false);
+              setErrorMessages(null);
+            }, 100);
             return;
           }
         } else {
@@ -82,6 +86,10 @@ const SignUpComponent = () => {
           setErrorMessages(error.message);
           setTitle("Sign Up Problem");
           setIcon("error");
+          setTimeout(() => {
+            setShowSwal(false);
+            setErrorMessages(null);
+          }, 100);
         }
       });
   };

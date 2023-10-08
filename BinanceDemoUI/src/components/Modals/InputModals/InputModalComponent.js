@@ -7,16 +7,18 @@ import SwalComponent from "../../Swals/SwalComponent";
 import "../InputModals/InputModalComponent.css";
 
 function InputModalComponent({
+  buyOrSellCoinModal,
   showModal,
   setShowModal,
   modalTitle,
   binanceItem,
+  buttonName,
 }) {
   const handleClose = () => {
     setShowModal(false);
   };
   const [doubleValue, setDoubleValue] = useState(1);
-  const [coinValue, setCoinValue] = useState();
+  const [coinValue, setCoinValue] = useState(0);
   const [selectedItem, setSelectedItem] = useState("Please Select Coin");
   const [showModalLoading, setShowModalLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,11 +33,8 @@ function InputModalComponent({
     sumOfCoin = coinValue * doubleValue;
   }
 
-  const fixedCoinValue = parseFloat(sumOfCoin.toFixed(2));
-  console.log(fixedCoinValue);
-  console.log(sumOfCoin);
-  console.log(coinValue);
-  console.log(doubleValue);
+  const fixedCoinValue = parseFloat(sumOfCoin.toFixed(5));
+
   let parsedData;
 
   const userDataFromLocalStorage = localStorage.getItem("userData");
@@ -61,8 +60,13 @@ function InputModalComponent({
   }
 
   const handleItemClick = (text) => {
-    setSelectedItem(text);
-    setCoinValue(getPriceForSymbol(text, binanceItem));
+    if (text === "Please Select Coin") {
+      setSelectedItem(text);
+      setCoinValue(0);
+    } else {
+      setSelectedItem(text);
+      setCoinValue(getPriceForSymbol(text, binanceItem));
+    }
   };
 
   const binanceItemWithDefault = [
@@ -73,10 +77,7 @@ function InputModalComponent({
     ...binanceItem,
   ];
 
-  const formSubmitHandler = (e) => {
-    e.preventDefault();
-    setShowModalLoading(true);
-    setIsLoading(true);
+  const buyService = () => {
     AuthService.buy(
       parsedData.id,
       selectedItem,
@@ -90,6 +91,10 @@ function InputModalComponent({
         setIcon("success");
         setTitle(rest.message);
         setShowSwal(true);
+        setTimeout(() => {
+          setShowSwal(false);
+          setErrorMessages(null);
+        }, 100);
       })
       .catch((error) => {
         setIsLoading(false);
@@ -102,6 +107,10 @@ function InputModalComponent({
             setErrorMessages(error.errorCode);
             setTitle("Buy");
             setIcon("error");
+            setTimeout(() => {
+              setShowSwal(false);
+              setErrorMessages(null);
+            }, 100);
             return;
           }
         } else {
@@ -109,8 +118,72 @@ function InputModalComponent({
           setErrorMessages(error.message);
           setTitle("Buy");
           setIcon("error");
+          setTimeout(() => {
+            setShowSwal(false);
+            setErrorMessages(null);
+          }, 100);
         }
       });
+  };
+
+  const sellService = () => {
+    AuthService.sell(
+      parsedData.id,
+      selectedItem,
+      coinValue,
+      doubleValue,
+      fixedCoinValue
+    )
+      .then((rest) => {
+        setIsLoading(false);
+        setShowModalLoading(false);
+        setIcon("success");
+        setTitle(rest.message);
+        setShowSwal(true);
+        setTimeout(() => {
+          setShowSwal(false);
+          setErrorMessages(null);
+        }, 100);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setShowModalLoading(false);
+        setErrorMessages(error.message);
+        if (error.response) {
+          const { status } = error.response;
+          if (status === 400) {
+            setShowSwal(true);
+            setErrorMessages(error.errorCode);
+            setTitle("Buy");
+            setIcon("error");
+            setTimeout(() => {
+              setShowSwal(false);
+              setErrorMessages(null);
+            }, 100);
+            return;
+          }
+        } else {
+          setShowSwal(true);
+          setErrorMessages(error.message);
+          setTitle("Buy");
+          setIcon("error");
+          setTimeout(() => {
+            setShowSwal(false);
+            setErrorMessages(null);
+          }, 100);
+        }
+      });
+  };
+
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setShowModalLoading(true);
+    if (buyOrSellCoinModal) {
+      buyService();
+    } else {
+      sellService();
+    }
   };
 
   const handleModalClose = () => {
@@ -128,14 +201,15 @@ function InputModalComponent({
           onHide={handleClose}
         >
           <Form onSubmit={formSubmitHandler}>
-            <Modal.Header closeButton>
+            <Modal.Header className="custom-header" closeButton>
               <Modal.Title>{modalTitle}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div className="panel-default">
                 <div className="panel-body">
                   <div className="row">
-                    <div className="col-sm-12">
+                    <div className="mb-3">
+                      {" "}
                       <div className="form-group">
                         <Dropdown>
                           <Dropdown.Toggle
@@ -157,11 +231,23 @@ function InputModalComponent({
                           </Dropdown.Menu>
                         </Dropdown>
                       </div>
-                      {coinValue !== undefined && (
+                    </div>
+                    <div className="mb-3">
+                      {" "}
+                      {coinValue !== 0 && (
                         <div className="form-group">
                           <label style={{ color: "red" }}>{coinValue}</label>
                         </div>
                       )}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="mb-3">
+                      <label className="input-label">
+                        {buyOrSellCoinModal
+                          ? "Buy Quantity:"
+                          : "Sell Quantity:"}
+                      </label>
                       <div className="form-group">
                         <InputGroup className="mb-3">
                           <Form.Control
@@ -172,6 +258,11 @@ function InputModalComponent({
                           />
                         </InputGroup>
                       </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="mb-3">
+                      <label className="input-label">Sum Of Quantity:</label>
                       <div className="form-group">
                         <InputGroup className="mb-3">
                           <Form.Control
@@ -190,7 +281,7 @@ function InputModalComponent({
             </Modal.Body>
             <Modal.Footer>
               <Button type="submit" variant="success" onClick={handleClose}>
-                Buy
+                {buttonName}
               </Button>
             </Modal.Footer>
           </Form>

@@ -38,3 +38,8 @@
 .disabled-input {
   background-color: #f8f9fa !important;
 }
+
+.custom-header {
+  background-color: #ea4f4c;
+  color: #222;
+}

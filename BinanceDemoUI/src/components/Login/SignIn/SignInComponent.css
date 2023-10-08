@@ -18,7 +18,7 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   width: 400px;
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  background-color: #222 !important;
 }
 
 .card-header h3 {
@@ -26,10 +26,13 @@ body {
 }
 
 .login_btn {
-  color: black !important;
-  background-color: #ffc312 !important;
+  color: white !important;
+  background-color: #ea4f4c !important;
   width: 100px !important;
   border: none !important;
+  font-family: "Roboto", sans-serif !important;
+  font-weight: 400;
+  font-size: larger;
 }
 
 .login_btn:hover {
@@ -39,7 +42,7 @@ body {
 
 .input-group-prepend span {
   width: 50px !important;
-  background-color: #ffc312 !important;
+  background-color: #ea4f4c !important;
   color: black !important;
   border: 0 !important;
 }
@@ -55,4 +58,14 @@ input:focus {
 
 .links a {
   margin-left: 4px !important;
+}
+
+.custom-signIn {
+  text-decoration: none;
+  color: #ea4f4c;
+  transition: color 0.3s ease;
+}
+
+.custom-signIn:hover {
+  color: #ec0c08;
 }

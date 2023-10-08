@@ -1,11 +1,11 @@
-﻿using BinanceReactDemo.API.DataTransferObject;
-using BinanceReactDemo.API.Models.BuyCoin;
-using BinanceReactDemo.API.Models.SellCoin;
-using BinanceReactDemo.API.Repostories.BuyCoin.Interfaces;
+﻿using BinanceReactDemo.API.Repostories.BuyCoin.Interfaces;
 using BinanceReactDemo.API.Repostories.SellCoin.Interfaces;
-using BinanceReactDemo.API.Validation;
-using BinanceReactDemo.API.Validation.BuyCoin;
-using BinanceReactDemo.API.Validation.SellCoin;
+using BinanceReactDemo.Common.UserInformatiomErrorMessages;
+using BinanceReactDemo.Common.UserInformationMessages;
+using BinanceReactDemo.DataTransferObject.Models;
+using BinanceReactDemo.Validation;
+using BinanceReactDemo.Validation.BuyCoin;
+using BinanceReactDemo.Validation.SellCoin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BinanceReactDemo.API.Controllers
@@ -45,11 +45,11 @@ namespace BinanceReactDemo.API.Controllers
 
                 if (isSuccess)
                 {
-                    return Ok(new { message = "Coin is buying" });
+                    return Ok(new { message = UserInformationMessages.BuyCoin });
                 }
                 else
                 {
-                    return BadRequest(new { message = "Could not buy coins" });
+                    return BadRequest(new { message = UserInformationErrorMessages.BuyCoinError });
                 }
             }
             catch (Exception exception)
@@ -72,25 +72,15 @@ namespace BinanceReactDemo.API.Controllers
                     return BadRequest(new { message = errorMessages });
                 }
 
-                var generateModel = new SellCoinModel
-                {
-                    CustomerId = request.CustomerId,
-                    CoinName = request.CoinName,
-                    CoinValue = request.CoinValue,
-                    CustomerSellValue = request.CustomerSellValue,
-                    SumOfValue = (request.CoinValue * request.CustomerSellValue).ToString(),
-                    SellDate = request.SellDate,
-                };
-
-                var isSuccess = await _sellCoinRepository.SellCoins(generateModel);
+                var isSuccess = await _sellCoinRepository.SellCoins(request);
 
                 if (isSuccess)
                 {
-                    return Ok(new { message = "Coin is selling" });
+                    return Ok(new { message = UserInformationMessages.SellCoin });
                 }
                 else
                 {
-                    return BadRequest(new { message = "Could not sell coins" });
+                    return BadRequest(new { message = UserInformationErrorMessages.SellCoinError });
                 }
             }
             catch (Exception exception)

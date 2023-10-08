@@ -1,21 +1,33 @@
-﻿using BinanceReactDemo.API.DataTransferObject;
-using BinanceReactDemo.API.Models.BinanceHub;
+﻿using BinanceReactDemo.API.Models.BinanceHub;
 using BinanceReactDemo.API.Repostories.FillModal.Interface;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 
 namespace BinanceReactDemo.API.Repostories.FillModal.Abstract
 {
+    /// <summary>
+    /// Fill Modal
+    /// </summary>
     public class GetModal : IGetModal
     {
         private readonly HttpClient _client;
         private readonly string _binanceApiEndpoint;
 
+        /// <summary>
+        /// Fill Modal
+        /// </summary>
+        /// <param name="client">HttpClient</param>
+        /// <param name="apiSettingsOptions">Binance Api</param>
         public GetModal(HttpClient client, IOptions<ApiSettings> apiSettingsOptions)
         {
             _client = client;
             _binanceApiEndpoint = apiSettingsOptions.Value.BinanceApiEndpoint;
         }
+
+        /// <summary>
+        /// Get Fill Modal
+        /// </summary>
+        /// <returns>List<BinanceItem></returns>
         public async Task<List<BinanceItem>> GetFillModal()
         {
             var apiValue = await FetchApiValueAsync();

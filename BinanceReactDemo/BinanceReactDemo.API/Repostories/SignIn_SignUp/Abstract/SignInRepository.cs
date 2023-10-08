@@ -1,6 +1,8 @@
 ﻿using BinanceReactDemo.API.Context;
-using BinanceReactDemo.API.DataTransferObject;
 using BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface;
+using BinanceReactDemo.Common.SqlQueries;
+using BinanceReactDemo.Common.UserInformationSqlErrorMessages;
+using BinanceReactDemo.DataTransferObject.Models;
 using Dapper;
 using System.Data;
 
@@ -29,18 +31,14 @@ namespace BinanceReactDemo.API.Repostories.SignIn_SignUp.Abstract
         {
             try
             {
-                const string checkUsernameQuery = "SELECT COUNT(*) FROM Customer WHERE Username = @username AND Password = @password";
-
-                const string customerIdQuery = "SELECT Id, Username FROM Customer WHERE Username = @username AND Password = @password";
-
                 var checkUsernameParameters = new DynamicParameters();
                 checkUsernameParameters.Add("@username", signInDto.Username, DbType.String);
                 checkUsernameParameters.Add("@password", signInDto.Password, DbType.String);
 
                 using var connection = _context.CreateConnection();
-                var existingUser = await connection.ExecuteScalarAsync<int>(checkUsernameQuery, checkUsernameParameters);
+                var existingUser = await connection.ExecuteScalarAsync<int>(SqlQueries.CheckUsernameQuery, checkUsernameParameters);
 
-                var result = connection.QueryFirstOrDefault<SignInRequestDto>(customerIdQuery, checkUsernameParameters);
+                var result = connection.QueryFirstOrDefault<SignInRequestDto>(SqlQueries.CustomerIdQuery, checkUsernameParameters);
 
                 if (existingUser > 0)
                 {
@@ -53,7 +51,7 @@ namespace BinanceReactDemo.API.Repostories.SignIn_SignUp.Abstract
             }
             catch (Exception exception)
             {
-                throw new ArgumentException("An error occurred while executing SQL queries.", exception);
+                throw new ArgumentException(UserInformationSqlErrorMessages.SqlError, exception);
             }
         }
     }

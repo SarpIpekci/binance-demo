@@ -1,0 +1,30 @@
+.custom-modal {
+  --bs-modal-width: 1500px;
+  margin: 0 auto;
+}
+
+.buyCoin {
+  background-color: green;
+  color: white;
+}
+
+.sellCoin {
+  background-color: red;
+  color: white;
+}
+
+.custom-header {
+  background-color: #ea4f4c;
+  color: #222;
+}
+
+.navLink .nav-link {
+  color: #222 !important;
+  font-weight: 300 !important;
+  font-family: "Roboto", sans-serif !important;
+  font-size: 15px;
+}
+
+.navLink .active .nav-link {
+  color: #ea4f4c !important;
+}
