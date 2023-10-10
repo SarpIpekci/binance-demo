@@ -1,37 +1,35 @@
-using BinanceReactDemo.API.Context;
 using BinanceReactDemo.API.Hubs;
 using BinanceReactDemo.API.Models.BinanceHub;
-using BinanceReactDemo.API.Repostories.BuyCoin.Abstract;
-using BinanceReactDemo.API.Repostories.BuyCoin.Interfaces;
-using BinanceReactDemo.API.Repostories.CustomerCoinTable.Abstract;
-using BinanceReactDemo.API.Repostories.CustomerCoinTable.Interface;
-using BinanceReactDemo.API.Repostories.FillModal.Abstract;
-using BinanceReactDemo.API.Repostories.FillModal.Interface;
-using BinanceReactDemo.API.Repostories.SellCoin.Abstract;
-using BinanceReactDemo.API.Repostories.SellCoin.Interfaces;
-using BinanceReactDemo.API.Repostories.SignIn_SignUp.Abstract;
-using BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface;
-using BinanceReactDemo.Validation.BuyCoin;
-using BinanceReactDemo.Validation.SellCoin;
-using BinanceReactDemo.Validation.SignIn;
-using BinanceReactDemo.Validation.SignUp;
+using BinanceReactDemo.Business.Abstract;
+using BinanceReactDemo.Business.Abstract.CustomerCoinTable;
+using BinanceReactDemo.Business.Abstract.SellCoin;
+using BinanceReactDemo.Business.Abstract.SignIn;
+using BinanceReactDemo.Business.Abstract.SignUp;
+using BinanceReactDemo.Business.Concrete;
+using BinanceReactDemo.Business.Concrete.CustomerCoinTable;
+using BinanceReactDemo.Business.Concrete.SellCoin;
+using BinanceReactDemo.Business.Concrete.SignIn;
+using BinanceReactDemo.Business.Concrete.SignUp;
+using BinanceReactDemo.Core.Extensions;
+using BinanceReactDemo.DataAccessLayer.Abstract.UnitOfWork;
+using BinanceReactDemo.Validation;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using SmartAdmin.DotNetSix.DataAccess.Concrete.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+ConfigurationExtension.SetConfiguration(builder.Configuration);
 
-builder.Services.AddSingleton<DapperContext>();
+builder.Services.TryAddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
 
-builder.Services.AddScoped<ISignInRepository, SignInRepository>();
-builder.Services.AddScoped<ISignUpRepository, SignUpRepository>();
-builder.Services.AddScoped<IBuyCoinRepository, BuyCoinRepository>();
-builder.Services.AddScoped<ISellCoinRepository, SellCoinRepository>();
-builder.Services.AddScoped<ICustomerCoinTables, CustomerCoinTables>();
-builder.Services.AddScoped<IGetModal, GetModal>();
-builder.Services.AddScoped<SignUpValidation>();
-builder.Services.AddScoped<SignInValidation>();
-builder.Services.AddScoped<BuyCoinValidation>();
-builder.Services.AddScoped<SellCoinValidation>();
+builder.Services.AddValidationServices();
+
+builder.Services.TryAddScoped(typeof(IBuyCoinService), typeof(BuyCoinService));
+builder.Services.TryAddScoped(typeof(ISellCoinService), typeof(SellCoinService));
+builder.Services.TryAddScoped(typeof(ISignInService), typeof(SignInService));
+builder.Services.TryAddScoped(typeof(ISignUpService), typeof(SignUpService));
+builder.Services.TryAddScoped(typeof(ICustomerCoinTableService), typeof(CustomerCoinTableService));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

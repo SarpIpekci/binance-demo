@@ -1,4 +1,5 @@
-﻿using BinanceReactDemo.API.Repostories.SignIn_SignUp.Interface;
+﻿using BinanceReactDemo.Business.Abstract.SignIn;
+using BinanceReactDemo.Business.Abstract.SignUp;
 using BinanceReactDemo.Common.UserInformatiomErrorMessages;
 using BinanceReactDemo.Common.UserInformationMessages;
 using BinanceReactDemo.DataTransferObject.Models;
@@ -13,17 +14,17 @@ namespace BinanceReactDemo.API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly ISignInRepository _signInRepository;
-        private readonly ISignUpRepository _signUpRepository;
+        private readonly ISignInService _signInService;
+        private readonly ISignUpService _signUpService;
         private readonly SignUpValidation _signUpValidation;
         private readonly SignInValidation _signInValidation;
 
         private const string _exception = "exception";
 
-        public LoginController(ISignInRepository signInRepository, ISignUpRepository signUpRepository, SignUpValidation signUpValidation, SignInValidation signInValidation)
+        public LoginController(ISignInService signInService, ISignUpService signUpService, SignUpValidation signUpValidation, SignInValidation signInValidation)
         {
-            _signInRepository = signInRepository;
-            _signUpRepository = signUpRepository;
+            _signInService = signInService;
+            _signUpService = signUpService;
             _signUpValidation = signUpValidation;
             _signInValidation = signInValidation;
         }
@@ -42,7 +43,7 @@ namespace BinanceReactDemo.API.Controllers
                     return BadRequest(new { message = errorMessages });
                 }
 
-                var (checkUserExists, result) = await _signInRepository.CustomerLogin(request);
+                var (checkUserExists, result) = await _signInService.CustomerLogin(request);
 
                 if (checkUserExists)
                 {
@@ -73,7 +74,7 @@ namespace BinanceReactDemo.API.Controllers
                     return BadRequest(new { message = errorMessages });
                 }
 
-                var isSuccess = await _signUpRepository.CreateCustomer(request);
+                var isSuccess = await _signUpService.CreateCustomer(request);
 
                 if (isSuccess)
                 {

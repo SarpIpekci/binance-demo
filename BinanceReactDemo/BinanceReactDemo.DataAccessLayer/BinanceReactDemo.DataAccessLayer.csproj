@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.7.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Dapper" Version="2.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BinanceReactDemo.Common\BinanceReactDemo.Common.csproj" />
+    <ProjectReference Include="..\BinanceReactDemo.Core\BinanceReactDemo.Core.csproj" />
     <ProjectReference Include="..\BinanceReactDemo.DataTransferObject\BinanceReactDemo.DataTransferObject.csproj" />
   </ItemGroup>
 
