@@ -1,5 +1,5 @@
-﻿using BinanceReactDemo.API.Repostories.BuyCoin.Interfaces;
-using BinanceReactDemo.API.Repostories.SellCoin.Interfaces;
+﻿using BinanceReactDemo.Business.Abstract;
+using BinanceReactDemo.Business.Abstract.SellCoin;
 using BinanceReactDemo.Common.UserInformatiomErrorMessages;
 using BinanceReactDemo.Common.UserInformationMessages;
 using BinanceReactDemo.DataTransferObject.Models;
@@ -14,15 +14,15 @@ namespace BinanceReactDemo.API.Controllers
     [ApiController]
     public class BuyOrSellController : ControllerBase
     {
-        private readonly IBuyCoinRepository _buyCoinForCustomer;
-        private readonly ISellCoinRepository _sellCoinRepository;
         private readonly BuyCoinValidation _buyCoinValidation;
         private readonly SellCoinValidation _sellCoinValidation;
+        private readonly IBuyCoinService _buyCoinService;
+        private readonly ISellCoinService _sellCoinService;
 
-        public BuyOrSellController(IBuyCoinRepository buyCoinForCustomer, BuyCoinValidation buyCoinValidation, ISellCoinRepository sellCoinRepository, SellCoinValidation sellCoinValidation)
+        public BuyOrSellController(IBuyCoinService buyCoinService, BuyCoinValidation buyCoinValidation, ISellCoinService sellCoinService, SellCoinValidation sellCoinValidation)
         {
-            _buyCoinForCustomer = buyCoinForCustomer;
-            _sellCoinRepository = sellCoinRepository;
+            _buyCoinService = buyCoinService;
+            _sellCoinService = sellCoinService;
             _buyCoinValidation = buyCoinValidation;
             _sellCoinValidation = sellCoinValidation;
         }
@@ -41,7 +41,7 @@ namespace BinanceReactDemo.API.Controllers
                     return BadRequest(new { message = errorMessages });
                 }
 
-                var isSuccess = await _buyCoinForCustomer.BuyCoins(request);
+                var isSuccess = await _buyCoinService.BuyCoins(request);
 
                 if (isSuccess)
                 {
@@ -72,7 +72,7 @@ namespace BinanceReactDemo.API.Controllers
                     return BadRequest(new { message = errorMessages });
                 }
 
-                var isSuccess = await _sellCoinRepository.SellCoins(request);
+                var isSuccess = await _sellCoinService.SellCoins(request);
 
                 if (isSuccess)
                 {

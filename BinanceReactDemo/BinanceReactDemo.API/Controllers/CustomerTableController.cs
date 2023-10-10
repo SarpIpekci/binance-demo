@@ -1,4 +1,4 @@
-﻿using BinanceReactDemo.API.Repostories.CustomerCoinTable.Interface;
+﻿using BinanceReactDemo.Business.Abstract.CustomerCoinTable;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BinanceReactDemo.API.Controllers
@@ -7,19 +7,19 @@ namespace BinanceReactDemo.API.Controllers
     [ApiController]
     public class CustomerTableController : ControllerBase
     {
-        private readonly ICustomerCoinTables _customerCoinTables;
+        private readonly ICustomerCoinTableService _customerCoinTableService;
 
-        public CustomerTableController(ICustomerCoinTables customerCoinTables)
+        public CustomerTableController(ICustomerCoinTableService customerCoinTableService)
         {
-            _customerCoinTables = customerCoinTables;
+            _customerCoinTableService = customerCoinTableService;
         }
 
         [HttpGet("getBuyCoin")]
-        public async Task<IActionResult> GetBuyCoin(int CustomerId)
+        public async Task<IActionResult> GetBuyCoin(int customerId)
         {
             try
             {
-                var result = await _customerCoinTables.GetBuyCoinsById(CustomerId);
+                var result = await _customerCoinTableService.GetBuyCoinsById(customerId);
 
                 return Ok(result);
             }
@@ -30,11 +30,11 @@ namespace BinanceReactDemo.API.Controllers
         }
 
         [HttpGet("getSellCoin")]
-        public async Task<IActionResult> GetSellCoin(int CustomerId)
+        public async Task<IActionResult> GetSellCoin(int customerId)
         {
             try
             {
-                var result = await _customerCoinTables.GetSellCoinsById(CustomerId);
+                var result = await _customerCoinTableService.GetSellCoinsById(customerId);
 
                 return Ok(result);
             }
@@ -45,11 +45,11 @@ namespace BinanceReactDemo.API.Controllers
         }
 
         [HttpGet("getAllCoins")]
-        public async Task<IActionResult> GetAllCoins(int CustomerId)
+        public async Task<IActionResult> GetAllCoins(int customerId)
         {
             try
             {
-                var result = await _customerCoinTables.GetAllCoinsById(CustomerId);
+                var result = await _customerCoinTableService.GetAllCoinsById(customerId);
 
                 return Ok(result);
             }

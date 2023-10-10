@@ -46,21 +46,26 @@ const SignInComponent = () => {
   }
 
   const formSubmitHandler = (e) => {
+    debugger;
     e.preventDefault();
     setShowModal(true);
     setIsLoading(true);
-    if (username == null || password == null) {
+    if (!username || !password) {
       setShowSwal(true);
       setErrorMessages("Username or Password is required.");
       setIcon("error");
-      setTitle("Test");
+      setTitle("Sign In Problem");
       setTimeout(() => {
         setShowSwal(false);
         setErrorMessages(null);
       }, 100);
+      setIsLoading(false);
+      setShowModal(false);
+      return;
     }
     AuthService.signIn(username, password)
       .then((rest) => {
+        debugger;
         const jsonData = JSON.stringify(rest);
         const replacedTurkishLetter = cleanTurkishCharacters(jsonData);
         const encryptedData = encryptData(

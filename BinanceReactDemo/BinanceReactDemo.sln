@@ -5,11 +5,17 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceReactDemo.API", "BinanceReactDemo.API\BinanceReactDemo.API.csproj", "{218F25E4-AC56-49A3-8A39-AB46DD31A1E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.Common", "BinanceReactDemo.Common\BinanceReactDemo.Common.csproj", "{4CE49CBC-A33C-4F67-9954-CBB7A5A98CA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceReactDemo.Common", "BinanceReactDemo.Common\BinanceReactDemo.Common.csproj", "{4CE49CBC-A33C-4F67-9954-CBB7A5A98CA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.Validation", "BinanceReactDemo.Validation\BinanceReactDemo.Validation.csproj", "{7E30E954-F041-46DA-9910-46BE21447BC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceReactDemo.Validation", "BinanceReactDemo.Validation\BinanceReactDemo.Validation.csproj", "{7E30E954-F041-46DA-9910-46BE21447BC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.DataTransferObject", "BinanceReactDemo.DataTransferObject\BinanceReactDemo.DataTransferObject.csproj", "{149E06CE-2D76-4426-AD48-D490B18AA255}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceReactDemo.DataTransferObject", "BinanceReactDemo.DataTransferObject\BinanceReactDemo.DataTransferObject.csproj", "{149E06CE-2D76-4426-AD48-D490B18AA255}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.Core", "BinanceReactDemo.Core\BinanceReactDemo.Core.csproj", "{8CD65EFE-9B53-46E6-BC00-1D8534D10A3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.DataAccessLayer", "BinanceReactDemo.DataAccessLayer\BinanceReactDemo.DataAccessLayer.csproj", "{B7DDB8E2-B562-46C7-BCF7-CD759DDC9AEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.Business", "BinanceReactDemo.Business\BinanceReactDemo.Business.csproj", "{47B31F46-D256-4207-8E1B-4F3E20ED671A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{149E06CE-2D76-4426-AD48-D490B18AA255}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{149E06CE-2D76-4426-AD48-D490B18AA255}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{149E06CE-2D76-4426-AD48-D490B18AA255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CD65EFE-9B53-46E6-BC00-1D8534D10A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CD65EFE-9B53-46E6-BC00-1D8534D10A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CD65EFE-9B53-46E6-BC00-1D8534D10A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CD65EFE-9B53-46E6-BC00-1D8534D10A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7DDB8E2-B562-46C7-BCF7-CD759DDC9AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7DDB8E2-B562-46C7-BCF7-CD759DDC9AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7DDB8E2-B562-46C7-BCF7-CD759DDC9AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7DDB8E2-B562-46C7-BCF7-CD759DDC9AEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47B31F46-D256-4207-8E1B-4F3E20ED671A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47B31F46-D256-4207-8E1B-4F3E20ED671A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47B31F46-D256-4207-8E1B-4F3E20ED671A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47B31F46-D256-4207-8E1B-4F3E20ED671A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

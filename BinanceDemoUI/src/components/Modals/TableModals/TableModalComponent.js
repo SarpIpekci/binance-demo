@@ -114,6 +114,7 @@ function TableModalComponent({ showModal, setShowTableModal }) {
       key={index}
       className={`${item.buyCoinValue !== undefined ? "buyCoin" : "sellCoin"}`}
     >
+      <td>{item.operationId}</td>
       <td>{item.customerName}</td>
       <td>{item.buyCoinName}</td>
       <td>{item.sellCoinName}</td>
@@ -133,6 +134,7 @@ function TableModalComponent({ showModal, setShowTableModal }) {
     <Table striped bordered hover size="md">
       <thead>
         <tr>
+          <th>Operation Id</th>
           <th>Customer Name</th>
           <th>Buy Coin Name</th>
           <th>Sell Coin Name</th>

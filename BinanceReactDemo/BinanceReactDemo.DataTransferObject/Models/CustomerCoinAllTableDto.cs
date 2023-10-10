@@ -6,6 +6,11 @@
     public class CustomerCoinAllTableDto
     {
         /// <summary>
+        /// Operation Id
+        /// </summary>
+        public int OperationId { get; set; }
+
+        /// <summary>
         /// Gets or sets the customer's name.
         /// </summary>
         public string CustomerName { get; set; } = null!;
