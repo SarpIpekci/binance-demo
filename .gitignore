@@ -31,3 +31,9 @@ yarn-error.log*
 /BinanceReactDemo/BinanceReactDemo.DataTransferObject/obj
 /BinanceReactDemo/BinanceReactDemo.Validation/bin/Debug/net6.0
 /BinanceReactDemo/BinanceReactDemo.Validation/obj
+/BinanceReactDemo/BinanceReactDemo.Business/bin/Debug/net6.0
+/BinanceReactDemo/BinanceReactDemo.Business/obj
+/BinanceReactDemo/BinanceReactDemo.Core/bin/Debug/net6.0
+/BinanceReactDemo/BinanceReactDemo.Core/obj
+/BinanceReactDemo/BinanceReactDemo.DataAccessLayer/bin/Debug/net6.0
+/BinanceReactDemo/BinanceReactDemo.DataAccessLayer/obj
