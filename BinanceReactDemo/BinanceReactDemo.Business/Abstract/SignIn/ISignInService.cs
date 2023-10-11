@@ -8,10 +8,17 @@ namespace BinanceReactDemo.Business.Abstract.SignIn
     public interface ISignInService
     {
         /// <summary>
+        /// Check Customer Exists
+        /// </summary>
+        /// <param name="signInDto"></param>
+        /// <returns>True Or False</returns>
+        public Task<bool> CheckCustomerExits(SignInDto signInDto);
+
+        /// <summary>
         /// Customer Login
         /// </summary>
         /// <param name="signInDto">Sign In Dto</param>
         /// <returns>True Or False</returns>
-        public Task<(bool checkUserExists, SignInRequestDto)> CustomerLogin(SignInDto signInDto);
+        public Task<SignInRequestDto> CustomerLogin(SignInDto signInDto);
     }
 }

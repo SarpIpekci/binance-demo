@@ -25,6 +25,23 @@
   font-size: 15px;
 }
 
-.navLink .active .nav-link {
+.nav-link.active {
   color: #ea4f4c !important;
+  font-weight: bold !important;
+}
+
+.pagination .page-item {
+  --bs-pagination-color: #222 !important;
+  --bs-pagination-bg: #222 !important;
+}
+
+.pagination .page-link {
+  color: #ea4f4c !important;
+  font-weight: 500 !important;
+  --bs-pagination-active-bg: #daf7a6 !important;
+  --bs-pagination-active-border-color: #daf7a6 !important;
+}
+
+.active > .page-link {
+  color: #222 !important;
 }

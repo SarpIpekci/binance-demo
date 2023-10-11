@@ -28,5 +28,10 @@
         /// Password Repeat
         /// </summary>
         public string PasswordRepeats { get; set; } = null!;
+
+        /// <summary>
+        /// Created Date
+        /// </summary>
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

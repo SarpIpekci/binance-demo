@@ -43,10 +43,12 @@ namespace BinanceReactDemo.API.Controllers
                     return BadRequest(new { message = errorMessages });
                 }
 
-                var (checkUserExists, result) = await _signInService.CustomerLogin(request);
+                var exits = await _signInService.CheckCustomerExits(request);
 
-                if (checkUserExists)
+                if (exits)
                 {
+                    var result = await _signInService.CustomerLogin(request);
+
                     return Ok(result);
                 }
                 else

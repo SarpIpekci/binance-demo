@@ -39,6 +39,7 @@ namespace BinanceReactDemo.DataAccessLayer.Concrete.SignUp
                 parameters.Add("@username", signUp.Username, DbType.String);
                 parameters.Add("@password", signUp.Password, DbType.String);
                 parameters.Add("@passwordRepeat", signUp.PasswordRepeats, DbType.String);
+                parameters.Add("@createdDate", signUp.CreatedDate, DbType.DateTime);
 
                 var rowAffected = await DbConnection.ExecuteAsync(SqlQueries.CreateCustomerQuery, parameters);
 

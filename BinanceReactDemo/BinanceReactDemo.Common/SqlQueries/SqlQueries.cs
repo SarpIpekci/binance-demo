@@ -33,12 +33,12 @@
         /// <summary>
         /// Check Username Query
         /// </summary>
-        public const string CheckUsernameQuery = "SELECT COUNT(*) FROM Customer WHERE Username = @username AND Password = @password";
+        public const string CheckUsernameQuery = "SELECT COUNT(*) FROM Customer WHERE Username = @username AND PasswordHash = @password";
 
         /// <summary>
         /// Customer Id Query
         /// </summary>
-        public const string CustomerIdQuery = "SELECT Id, Username, CustomerName FROM Customer WHERE Username = @username AND Password = @password";
+        public const string CustomerIdQuery = "SELECT Id, Username, CustomerName FROM Customer WHERE Username = @username AND PasswordHash = @password";
 
         /// <summary>
         /// Check Username Sign Up Query
@@ -48,6 +48,6 @@
         /// <summary>
         /// Create Customer Query
         /// </summary>
-        public const string CreateCustomerQuery = "INSERT INTO Customer(CustomerName,CustomerEmail,Username,Password,PasswordRepeat) VALUES(@customerName,@customerEmail,@username,@password,@passwordRepeat)";
+        public const string CreateCustomerQuery = "INSERT INTO Customer(CustomerName,CustomerEmail,Username,PasswordHash,PasswordRepeatHash,CreatedDate) VALUES(@customerName,@customerEmail,@username,@password,@passwordRepeat,@createdDate)";
     }
 }

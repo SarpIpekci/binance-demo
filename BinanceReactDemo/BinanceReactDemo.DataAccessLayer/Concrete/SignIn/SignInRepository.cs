@@ -22,12 +22,11 @@ namespace BinanceReactDemo.DataAccessLayer.Concrete.SignIn
         }
 
         /// <summary>
-        /// Customer Login
+        /// Check Customer Exists
         /// </summary>
-        /// <param name="signInDto">Sign In Dto</param>
+        /// <param name="signInDto"></param>
         /// <returns>True Or False</returns>
-        /// <exception cref="ArgumentException">Exception</exception>
-        public async Task<(bool checkUserExists, SignInRequestDto)> CustomerLoginAsync(SignInDto signInDto)
+        public async Task<bool> CheckCustomerExistsAsync(SignInDto signInDto)
         {
             try
             {
@@ -37,16 +36,29 @@ namespace BinanceReactDemo.DataAccessLayer.Concrete.SignIn
 
                 var existingUser = await DbConnection.ExecuteScalarAsync<int>(SqlQueries.CheckUsernameQuery, checkUsernameParameters);
 
-                var result = DbConnection.QueryFirstOrDefault<SignInRequestDto>(SqlQueries.CustomerIdQuery, checkUsernameParameters);
+                return existingUser > 0;
+            }
+            catch (Exception exception)
+            {
+                throw new ArgumentException(UserInformationSqlErrorMessages.SqlError, exception);
+            }
+        }
 
-                if (existingUser > 0)
-                {
-                    return (true, result);
-                }
-                else
-                {
-                    return (false, result);
-                }
+        /// <summary>
+        /// Customer Login
+        /// </summary>
+        /// <param name="signInDto">Sign In Dto</param>
+        /// <returns>True Or False</returns>
+        /// <exception cref="ArgumentException">Exception</exception>
+        public async Task<SignInRequestDto> CheckCustomerAsync(SignInDto signInDto)
+        {
+            try
+            {
+                var checkUsernameParameters = new DynamicParameters();
+                checkUsernameParameters.Add("@username", signInDto.Username, DbType.String);
+                checkUsernameParameters.Add("@password", signInDto.Password, DbType.String);
+
+                return DbConnection.QueryFirstOrDefault<SignInRequestDto>(SqlQueries.CustomerIdQuery, checkUsernameParameters);
             }
             catch (Exception exception)
             {
