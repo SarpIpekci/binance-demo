@@ -1,4 +1,5 @@
 ﻿using BinanceReactDemo.Business.Abstract.SignUp;
+using BinanceReactDemo.Common.PasswordHashHelper;
 using BinanceReactDemo.DataAccessLayer.Abstract.UnitOfWork;
 using BinanceReactDemo.DataTransferObject.Models;
 
@@ -27,6 +28,9 @@ namespace BinanceReactDemo.Business.Concrete.SignUp
         /// <returns>True Or False</returns>
         public async Task<bool> CreateCustomer(SignUpDto signUp)
         {
+            signUp.Password = PasswordHash.HashPassword(signUp.Password);
+            signUp.PasswordRepeats = PasswordHash.HashPassword(signUp.PasswordRepeats);
+
             using var unitOfWork = _unitOfWorkFactory.Create();
 
             unitOfWork.OpenConnection();

@@ -5,12 +5,19 @@ import Table from "react-bootstrap/Table";
 import "../TableModals/TableModalComponent.css";
 import { AuthService } from "../../../requestServices";
 import { DecryptData } from "../../../DencryptionUtils/DencryptionUtility";
+import Pagination from "react-bootstrap/Pagination";
 
 function TableModalComponent({ showModal, setShowTableModal }) {
   const [activeTab, setActiveTab] = useState("buyCoin");
-  const [buyCoinResult, setBuyCoinResult] = useState([]);
   const [sellCoinResult, setSellCoinResult] = useState([]);
   const [allCoinResult, setAllCoinResult] = useState([]);
+  const [buyCoinResult, setBuyCoinResult] = useState([]);
+  const itemsPerPage = 10;
+  const [activePage, setActivePage] = useState(1);
+
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+  };
 
   const handleClose = () => {
     setShowTableModal(false);
@@ -43,6 +50,24 @@ function TableModalComponent({ showModal, setShowTableModal }) {
     }
   }, [showModal]);
 
+  const getResultLengthByTab = () => {
+    switch (activeTab) {
+      case "buyCoin":
+        return buyCoinResult.length;
+      case "sellCoin":
+        return sellCoinResult.length;
+      case "allCoin":
+        return allCoinResult.length;
+      default:
+        return 0;
+    }
+  };
+
+  const totalItems = getResultLengthByTab();
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (activePage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -52,105 +77,196 @@ function TableModalComponent({ showModal, setShowTableModal }) {
   };
 
   const buyCoinContent = (
-    <Table striped bordered hover size="md">
-      <thead>
-        <tr>
-          <th>Operation Id</th>
-          <th>Customer Name</th>
-          <th>Coin Name</th>
-          <th>Coin Value</th>
-          <th>Customer Buy Value</th>
-          <th>Sum Of Value</th>
-          <th>Buy Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {buyCoinResult.map((item, index) => (
-          <tr key={item.operationId}>
-            <td>{index + 1}</td>
-            <td>{item.customerName}</td>
-            <td>{item.coinName}</td>
-            <td>{item.coinValue}</td>
-            <td>{item.customerBuyValue}</td>
-            <td>{item.sumOfValue.toFixed(2)}</td>
-            <td>{formatDate(item.buyDate)}</td>
+    <div>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Operation Id</th>
+            <th>Customer Name</th>
+            <th>Coin Name</th>
+            <th>Coin Value</th>
+            <th>Customer Buy Value</th>
+            <th>Sum Of Value</th>
+            <th>Buy Date</th>
           </tr>
+        </thead>
+        <tbody>
+          {buyCoinResult.slice(startIndex, endIndex).map((item, index) => (
+            <tr key={item.operationId}>
+              <td>{item.operationId}</td>
+              <td>{item.customerName}</td>
+              <td>{item.coinName}</td>
+              <td>{item.coinValue}</td>
+              <td>{item.customerBuyValue}</td>
+              <td>{item.sumOfValue.toFixed(2)}</td>
+              <td>{formatDate(item.buyDate)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      <Pagination>
+        <Pagination.First onClick={() => handlePageChange(1)} />
+        <Pagination.Prev
+          onClick={() =>
+            handlePageChange(activePage > 1 ? activePage - 1 : activePage)
+          }
+        />
+
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <Pagination.Item
+            key={index}
+            active={index + 1 === activePage}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
         ))}
-      </tbody>
-    </Table>
+
+        <Pagination.Next
+          onClick={() =>
+            handlePageChange(
+              activePage < totalPages ? activePage + 1 : activePage
+            )
+          }
+        />
+        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+      </Pagination>
+    </div>
   );
 
   const sellCoinContent = (
-    <Table striped bordered hover size="md">
-      <thead>
-        <tr>
-          <th>Operation Id</th>
-          <th>Customer Name</th>
-          <th>Coin Name</th>
-          <th>Coin Value</th>
-          <th>Customer Sell Value</th>
-          <th>Sum Of Value</th>
-          <th>Sell Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {sellCoinResult.map((item, index) => (
-          <tr key={item.operationId}>
-            <td>{index + 1}</td>
-            <td>{item.customerName}</td>
-            <td>{item.coinName}</td>
-            <td>{item.coinValue}</td>
-            <td>{item.customerSellValue}</td>
-            <td>{item.sumOfValue.toFixed(2)}</td>
-            <td>{formatDate(item.sellDate)}</td>
+    <div>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Operation Id</th>
+            <th>Customer Name</th>
+            <th>Coin Name</th>
+            <th>Coin Value</th>
+            <th>Customer Sell Value</th>
+            <th>Sum Of Value</th>
+            <th>Sell Date</th>
           </tr>
+        </thead>
+        <tbody>
+          {sellCoinResult.slice(startIndex, endIndex).map((item, index) => (
+            <tr key={item.operationId}>
+              <td>{item.operationId}</td>
+              <td>{item.customerName}</td>
+              <td>{item.coinName}</td>
+              <td>{item.coinValue}</td>
+              <td>{item.customerSellValue}</td>
+              <td>{item.sumOfValue.toFixed(2)}</td>
+              <td>{formatDate(item.sellDate)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      <Pagination>
+        <Pagination.First onClick={() => handlePageChange(1)} />
+        <Pagination.Prev
+          onClick={() =>
+            handlePageChange(activePage > 1 ? activePage - 1 : activePage)
+          }
+        />
+
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <Pagination.Item
+            key={index}
+            active={index + 1 === activePage}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
         ))}
-      </tbody>
-    </Table>
+
+        <Pagination.Next
+          onClick={() =>
+            handlePageChange(
+              activePage < totalPages ? activePage + 1 : activePage
+            )
+          }
+        />
+        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+      </Pagination>
+    </div>
   );
 
-  const tableRows = allCoinResult.map((item, index) => (
-    <tr
-      key={index}
-      className={`${item.buyCoinValue !== undefined ? "buyCoin" : "sellCoin"}`}
-    >
-      <td>{item.operationId}</td>
-      <td>{item.customerName}</td>
-      <td>{item.buyCoinName}</td>
-      <td>{item.sellCoinName}</td>
-      <td>{item.buyCoinValue}</td>
-      <td>{item.sellCoinValue}</td>
-      <td>{item.buyCustomerValue}</td>
-      <td>{item.sellCustomerValue}</td>
-      <td>{item.buySumOfValue.toFixed(2)}</td>
-      <td>{item.sellSumOfValue.toFixed(2)}</td>
-      <td>{item.differences.toFixed(2)}</td>
-      <td>{formatDate(item.buyDate)}</td>
-      <td>{formatDate(item.sellDate)}</td>
-    </tr>
-  ));
+  const tableRows = allCoinResult
+    .slice(startIndex, endIndex)
+    .map((item, index) => (
+      <tr
+        key={index}
+        className={`${
+          item.buyCoinValue !== undefined ? "buyCoin" : "sellCoin"
+        }`}
+      >
+        <td>{item.operationId}</td>
+        <td>{item.customerName}</td>
+        <td>{item.buyCoinName}</td>
+        <td>{item.sellCoinName}</td>
+        <td>{item.buyCoinValue}</td>
+        <td>{item.sellCoinValue}</td>
+        <td>{item.buyCustomerValue}</td>
+        <td>{item.sellCustomerValue}</td>
+        <td>{item.buySumOfValue.toFixed(2)}</td>
+        <td>{item.sellSumOfValue.toFixed(2)}</td>
+        <td>{item.differences.toFixed(2)}</td>
+        <td>{formatDate(item.buyDate)}</td>
+        <td>{formatDate(item.sellDate)}</td>
+      </tr>
+    ));
 
   const allCoinContent = (
-    <Table striped bordered hover size="md">
-      <thead>
-        <tr>
-          <th>Operation Id</th>
-          <th>Customer Name</th>
-          <th>Buy Coin Name</th>
-          <th>Sell Coin Name</th>
-          <th>Buy Coin Value</th>
-          <th>Sell Coin Value</th>
-          <th>Buy Customer Value</th>
-          <th>Sell Customer Value</th>
-          <th>Buy Sum Of Value</th>
-          <th>Sell Sum Of Value</th>
-          <th>Differences</th>
-          <th>Buy Date</th>
-          <th>Sell Date</th>
-        </tr>
-      </thead>
-      <tbody>{tableRows}</tbody>
-    </Table>
+    <div>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Operation Id</th>
+            <th>Customer Name</th>
+            <th>Buy Coin Name</th>
+            <th>Sell Coin Name</th>
+            <th>Buy Coin Value</th>
+            <th>Sell Coin Value</th>
+            <th>Buy Customer Value</th>
+            <th>Sell Customer Value</th>
+            <th>Buy Sum Of Value</th>
+            <th>Sell Sum Of Value</th>
+            <th>Differences</th>
+            <th>Buy Date</th>
+            <th>Sell Date</th>
+          </tr>
+        </thead>
+        <tbody>{tableRows}</tbody>
+      </Table>
+      <Pagination>
+        <Pagination.First onClick={() => handlePageChange(1)} />
+        <Pagination.Prev
+          onClick={() =>
+            handlePageChange(activePage > 1 ? activePage - 1 : activePage)
+          }
+        />
+
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <Pagination.Item
+            key={index}
+            active={index + 1 === activePage}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
+        ))}
+
+        <Pagination.Next
+          onClick={() =>
+            handlePageChange(
+              activePage < totalPages ? activePage + 1 : activePage
+            )
+          }
+        />
+        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+      </Pagination>
+    </div>
   );
 
   const renderActiveTabContent = () => {
