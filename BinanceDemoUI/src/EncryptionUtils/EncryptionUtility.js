@@ -1,3 +1,3 @@
-export function encryptData(data, key) {
+export function encryptData(data) {
   return btoa(data);
 }

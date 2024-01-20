@@ -1,5 +1,5 @@
 ﻿using BinanceReactDemo.Business.Abstract.SignIn;
-using BinanceReactDemo.Common.PasswordHashHelper;
+using BinanceReactDemo.Common.SecurityHelper.PasswordHashHelper;
 using BinanceReactDemo.DataAccessLayer.Abstract.UnitOfWork;
 using BinanceReactDemo.DataTransferObject.Models;
 

@@ -16,12 +16,12 @@ namespace BinanceReactDemo.Validation.SignIn
         {
             RuleFor(model => model.Username)
            .NotEmpty()
-           .When(model => string.IsNullOrWhiteSpace(model.Password))
+           .When(model => string.IsNullOrWhiteSpace(model.Username))
            .WithMessage(SignInValidationMessages.UsernameOrPasswordRequired);
 
             RuleFor(model => model.Password)
                 .NotEmpty()
-                .When(model => string.IsNullOrWhiteSpace(model.Username))
+                .When(model => string.IsNullOrWhiteSpace(model.Password))
                 .WithMessage(SignInValidationMessages.UsernameOrPasswordRequired);
         }
     }

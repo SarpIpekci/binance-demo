@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import "../Navbar/BinanceNavBar.css";
 import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
-import { DecryptData } from "../../DencryptionUtils/DencryptionUtility";
+import { DecryptData } from "../../DecryptionUtils/DecryptionUtility";
 import InputModalComponent from "../Modals/InputModals/InputModalComponent";
 import { AuthService } from "../../requestServices";
 import TableModalComponent from "../Modals/TableModals/TableModalComponent";

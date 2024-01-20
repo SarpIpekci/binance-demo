@@ -1,10 +1,18 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace BinanceReactDemo.Common.PasswordHashHelper
+namespace BinanceReactDemo.Common.SecurityHelper.PasswordHashHelper
 {
+    /// <summary>
+    /// Using for Password Hash
+    /// </summary>
     public static class PasswordHash
     {
+        /// <summary>
+        /// Hashing Password
+        /// </summary>
+        /// <param name="password">User Password</param>
+        /// <returns></returns>
         public static string HashPassword(string password)
         {
             using var sha256 = SHA256.Create();

@@ -1,9 +1,10 @@
 ﻿using BinanceReactDemo.Business.Abstract.SignIn;
 using BinanceReactDemo.Business.Abstract.SignUp;
+using BinanceReactDemo.Common.SecurityHelper.HtmlEncodingHelper;
 using BinanceReactDemo.Common.UserInformatiomErrorMessages;
 using BinanceReactDemo.Common.UserInformationMessages;
 using BinanceReactDemo.DataTransferObject.Models;
-using BinanceReactDemo.Validation;
+using BinanceReactDemo.Validation.DynamicValidationAndEncoded;
 using BinanceReactDemo.Validation.SignIn;
 using BinanceReactDemo.Validation.SignUp;
 using Microsoft.AspNetCore.Mvc;
@@ -16,38 +17,26 @@ namespace BinanceReactDemo.API.Controllers
     {
         private readonly ISignInService _signInService;
         private readonly ISignUpService _signUpService;
-        private readonly SignUpValidation _signUpValidation;
-        private readonly SignInValidation _signInValidation;
 
-        private const string _exception = "exception";
-
-        public LoginController(ISignInService signInService, ISignUpService signUpService, SignUpValidation signUpValidation, SignInValidation signInValidation)
+        public LoginController(ISignInService signInService, ISignUpService signUpService)
         {
             _signInService = signInService;
             _signUpService = signUpService;
-            _signUpValidation = signUpValidation;
-            _signInValidation = signInValidation;
         }
 
         [HttpPost("signIn")]
+        [DynamicValidation(typeof(SignInValidation))]
         public async Task<IActionResult> SignIn([FromBody] SignInDto request)
         {
             try
             {
-                var validationResult = _signInValidation.Validate(request);
+                var encodingModel = HtmlEncoding.EncodeModel(request);
 
-                var errorMessages = ValidationMessages.ValidationResults(validationResult);
-
-                if (!validationResult.IsValid)
-                {
-                    return BadRequest(new { message = errorMessages });
-                }
-
-                var exits = await _signInService.CheckCustomerExits(request);
+                var exits = await _signInService.CheckCustomerExits(encodingModel);
 
                 if (exits)
                 {
-                    var result = await _signInService.CustomerLogin(request);
+                    var result = await _signInService.CustomerLogin(encodingModel);
 
                     return Ok(result);
                 }
@@ -58,25 +47,19 @@ namespace BinanceReactDemo.API.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(new { message = exception.Message, errorCode = _exception });
+                return BadRequest(new { message = exception.Message });
             }
         }
 
         [HttpPost("signUp")]
+        [DynamicValidation(typeof(SignUpValidation))]
         public async Task<IActionResult> SignUp([FromBody] SignUpDto request)
         {
             try
             {
-                var validationResult = _signUpValidation.Validate(request);
+                var encodingModel = HtmlEncoding.EncodeModel(request);
 
-                var errorMessages = ValidationMessages.ValidationResults(validationResult);
-
-                if (!validationResult.IsValid)
-                {
-                    return BadRequest(new { message = errorMessages });
-                }
-
-                var isSuccess = await _signUpService.CreateCustomer(request);
+                var isSuccess = await _signUpService.CreateCustomer(encodingModel);
 
                 if (isSuccess)
                 {
