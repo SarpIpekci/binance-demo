@@ -4,7 +4,7 @@ import { Modal, Form } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import "../TableModals/TableModalComponent.css";
 import { AuthService } from "../../../requestServices";
-import { DecryptData } from "../../../DencryptionUtils/DencryptionUtility";
+import { DecryptData } from "../../../DecryptionUtils/DecryptionUtility";
 import Pagination from "react-bootstrap/Pagination";
 
 function TableModalComponent({ showModal, setShowTableModal }) {

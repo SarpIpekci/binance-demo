@@ -5,6 +5,7 @@ using BinanceReactDemo.Common.UserInformationMessages;
 using BinanceReactDemo.DataTransferObject.Models;
 using BinanceReactDemo.Validation;
 using BinanceReactDemo.Validation.BuyCoin;
+using BinanceReactDemo.Validation.DynamicValidationAndEncoded;
 using BinanceReactDemo.Validation.SellCoin;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,33 +15,21 @@ namespace BinanceReactDemo.API.Controllers
     [ApiController]
     public class BuyOrSellController : ControllerBase
     {
-        private readonly BuyCoinValidation _buyCoinValidation;
-        private readonly SellCoinValidation _sellCoinValidation;
         private readonly IBuyCoinService _buyCoinService;
         private readonly ISellCoinService _sellCoinService;
 
-        public BuyOrSellController(IBuyCoinService buyCoinService, BuyCoinValidation buyCoinValidation, ISellCoinService sellCoinService, SellCoinValidation sellCoinValidation)
+        public BuyOrSellController(IBuyCoinService buyCoinService, ISellCoinService sellCoinService)
         {
             _buyCoinService = buyCoinService;
             _sellCoinService = sellCoinService;
-            _buyCoinValidation = buyCoinValidation;
-            _sellCoinValidation = sellCoinValidation;
         }
 
         [HttpPost("buy")]
+        [DynamicValidation(typeof(BuyCoinValidation))]
         public async Task<IActionResult> BuyCoinForm([FromBody] BuyCoinDto request)
         {
             try
             {
-                var validationResult = _buyCoinValidation.Validate(request);
-
-                var errorMessages = ValidationMessages.ValidationResults(validationResult);
-
-                if (!validationResult.IsValid)
-                {
-                    return BadRequest(new { message = errorMessages });
-                }
-
                 var isSuccess = await _buyCoinService.BuyCoins(request);
 
                 if (isSuccess)
@@ -59,19 +48,11 @@ namespace BinanceReactDemo.API.Controllers
         }
 
         [HttpPost("sell")]
+        [DynamicValidation(typeof(SellCoinValidation))]
         public async Task<IActionResult> SellCoinForm([FromBody] SellCoinDto request)
         {
             try
             {
-                var validationResult = _sellCoinValidation.Validate(request);
-
-                var errorMessages = ValidationMessages.ValidationResults(validationResult);
-
-                if (!validationResult.IsValid)
-                {
-                    return BadRequest(new { message = errorMessages });
-                }
-
                 var isSuccess = await _sellCoinService.SellCoins(request);
 
                 if (isSuccess)

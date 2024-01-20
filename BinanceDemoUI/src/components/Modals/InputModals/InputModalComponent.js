@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { InputGroup, Button, Modal, Dropdown, Form } from "react-bootstrap";
-import { DecryptData } from "../../../DencryptionUtils/DencryptionUtility";
+import { DecryptData } from "../../../DecryptionUtils/DecryptionUtility";
 import LoadingModalComponents from "../LoadingModals/LoadingModalComponent";
 import { AuthService } from "../../../requestServices";
 import SwalComponent from "../../Swals/SwalComponent";
