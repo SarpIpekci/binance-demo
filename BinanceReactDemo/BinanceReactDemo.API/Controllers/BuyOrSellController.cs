@@ -3,10 +3,11 @@ using BinanceReactDemo.Business.Abstract.SellCoin;
 using BinanceReactDemo.Common.UserInformatiomErrorMessages;
 using BinanceReactDemo.Common.UserInformationMessages;
 using BinanceReactDemo.DataTransferObject.Models;
-using BinanceReactDemo.Validation;
 using BinanceReactDemo.Validation.BuyCoin;
 using BinanceReactDemo.Validation.DynamicValidationAndEncoded;
+using BinanceReactDemo.Validation.HtmlEncoded;
 using BinanceReactDemo.Validation.SellCoin;
+using BinanceReactDemo.Validation.XSSControl;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BinanceReactDemo.API.Controllers
@@ -26,6 +27,8 @@ namespace BinanceReactDemo.API.Controllers
 
         [HttpPost("buy")]
         [DynamicValidation(typeof(BuyCoinValidation))]
+        [DynamicXssControl]
+        [DynamicHtmlEncode]
         public async Task<IActionResult> BuyCoinForm([FromBody] BuyCoinDto request)
         {
             try
@@ -49,6 +52,8 @@ namespace BinanceReactDemo.API.Controllers
 
         [HttpPost("sell")]
         [DynamicValidation(typeof(SellCoinValidation))]
+        [DynamicXssControl]
+        [DynamicHtmlEncode]
         public async Task<IActionResult> SellCoinForm([FromBody] SellCoinDto request)
         {
             try

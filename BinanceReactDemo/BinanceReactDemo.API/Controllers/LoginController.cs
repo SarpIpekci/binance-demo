@@ -1,12 +1,12 @@
 ﻿using BinanceReactDemo.Business.Abstract.SignIn;
 using BinanceReactDemo.Business.Abstract.SignUp;
-using BinanceReactDemo.Common.SecurityHelper.HtmlEncodingHelper;
 using BinanceReactDemo.Common.UserInformatiomErrorMessages;
 using BinanceReactDemo.Common.UserInformationMessages;
 using BinanceReactDemo.DataTransferObject.Models;
 using BinanceReactDemo.Validation.DynamicValidationAndEncoded;
 using BinanceReactDemo.Validation.SignIn;
 using BinanceReactDemo.Validation.SignUp;
+using BinanceReactDemo.Validation.XSSControl;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BinanceReactDemo.API.Controllers
@@ -26,53 +26,42 @@ namespace BinanceReactDemo.API.Controllers
 
         [HttpPost("signIn")]
         [DynamicValidation(typeof(SignInValidation))]
+        [DynamicXssControl]
         public async Task<IActionResult> SignIn([FromBody] SignInDto request)
         {
-            try
+            if (request.Username.Equals("sarp"))
             {
-                var encodingModel = HtmlEncoding.EncodeModel(request);
-
-                var exits = await _signInService.CheckCustomerExits(encodingModel);
-
-                if (exits)
-                {
-                    var result = await _signInService.CustomerLogin(encodingModel);
-
-                    return Ok(result);
-                }
-                else
-                {
-                    return BadRequest(new { message = UserInformationErrorMessages.SignInError });
-                }
+                throw new Exception("test");
             }
-            catch (Exception exception)
+
+            var exits = await _signInService.CheckCustomerExits(request);
+
+            if (exits)
             {
-                return BadRequest(new { message = exception.Message });
+                var result = await _signInService.CustomerLogin(request);
+
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(new { message = UserInformationErrorMessages.SignInError });
             }
         }
 
         [HttpPost("signUp")]
         [DynamicValidation(typeof(SignUpValidation))]
+        [DynamicXssControl]
         public async Task<IActionResult> SignUp([FromBody] SignUpDto request)
         {
-            try
+            var isSuccess = await _signUpService.CreateCustomer(request);
+
+            if (isSuccess)
             {
-                var encodingModel = HtmlEncoding.EncodeModel(request);
-
-                var isSuccess = await _signUpService.CreateCustomer(encodingModel);
-
-                if (isSuccess)
-                {
-                    return Ok(new { message = UserInformationMessages.SignUpUser });
-                }
-                else
-                {
-                    return BadRequest(new { message = UserInformationErrorMessages.SignUpError });
-                }
+                return Ok(new { message = UserInformationMessages.SignUpUser });
             }
-            catch (Exception exception)
+            else
             {
-                return BadRequest(new { message = exception.Message });
+                return BadRequest(new { message = UserInformationErrorMessages.SignUpError });
             }
         }
     }

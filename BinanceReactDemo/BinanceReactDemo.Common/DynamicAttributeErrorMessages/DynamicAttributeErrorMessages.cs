@@ -3,7 +3,7 @@
     /// <summary>
     /// Dynamic Validation Attribute Error Messages
     /// </summary>
-    public static class DynamicValidationAttributeErrorMessages
+    public static class DynamicAttributeErrorMessages
     {
         /// <summary>
         /// Request Is Missing
@@ -14,5 +14,10 @@
         /// Invalid Operator Type
         /// </summary>
         public const string InvalidOperatorType = "Invalid validator type.";
+
+        /// <summary>
+        /// Invalid Input Detected
+        /// </summary>
+        public const string InvalidInputDetected = "Invalid input detected.";
     }
 }

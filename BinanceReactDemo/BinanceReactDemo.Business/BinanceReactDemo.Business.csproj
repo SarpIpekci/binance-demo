@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BinanceReactDemo.CacheManager\BinanceReactDemo.CacheManager.csproj" />
     <ProjectReference Include="..\BinanceReactDemo.Common\BinanceReactDemo.Common.csproj" />
     <ProjectReference Include="..\BinanceReactDemo.Core\BinanceReactDemo.Core.csproj" />
     <ProjectReference Include="..\BinanceReactDemo.DataAccessLayer\BinanceReactDemo.DataAccessLayer.csproj" />

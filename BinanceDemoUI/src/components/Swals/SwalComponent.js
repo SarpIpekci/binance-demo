@@ -1,13 +1,21 @@
+import { useEffect } from "react";
 import Swal from "sweetalert2";
 
-const SwalComponent = ({ showSwal, errorMessages, title, icon }) => {
+const SwalComponent = ({
+  showSwal,
+  errorMessages,
+  title,
+  icon,
+  confirmCallBack,
+}) => {
   if (showSwal) {
     Swal.fire({
       title: title,
       text: errorMessages,
       icon: icon,
-      timer: 2000,
-      showConfirmButton: false,
+      showConfirmButton: true,
+      allowOutsideClick: false,
+      preConfirm: confirmCallBack,
     });
   }
 
