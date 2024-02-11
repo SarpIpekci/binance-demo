@@ -1,4 +1,6 @@
 ﻿using BinanceReactDemo.Business.Abstract.SellCoin;
+using BinanceReactDemo.CacheManager.Abstract;
+using BinanceReactDemo.Common.Caching;
 using BinanceReactDemo.DataAccessLayer.Abstract.UnitOfWork;
 using BinanceReactDemo.DataTransferObject.Models;
 
@@ -10,14 +12,16 @@ namespace BinanceReactDemo.Business.Concrete.SellCoin
     public class SellCoinService : ISellCoinService
     {
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+        private readonly ICacheManager _cacheManager;
 
         /// <summary>
         /// Sell Coin Service
         /// </summary>
         /// <param name="unitOfWorkFactory">Unit Of Work</param>
-        public SellCoinService(IUnitOfWorkFactory unitOfWorkFactory)
+        public SellCoinService(IUnitOfWorkFactory unitOfWorkFactory, ICacheManager cacheManager)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
+            _cacheManager = cacheManager;
         }
 
         /// <summary>
@@ -28,6 +32,10 @@ namespace BinanceReactDemo.Business.Concrete.SellCoin
         /// <exception cref="ArgumentException">Exception</exception>
         public async Task<bool> SellCoins(SellCoinDto sellCoin)
         {
+            await _cacheManager.RemoveAsync(CacheConstants.GetSellCoinsById);
+
+            await _cacheManager.RemoveAsync(CacheConstants.GetAllCoinsById);
+
             using var unitOfWork = _unitOfWorkFactory.Create();
 
             unitOfWork.OpenConnection();

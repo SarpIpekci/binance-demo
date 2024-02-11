@@ -117,41 +117,20 @@ const SignUpComponent = () => {
       passwordRepeat
     )
       .then((rest) => {
+        setIsLoading(false);
+        setShowModal(false);
         setIcon("success");
         setTitle(rest.message);
         setShowSwal(true);
-        setTimeout(() => {
-          setIsLoading(false);
-          setShowModal(false);
-          navigate("/SignIn");
-        }, 1500);
+        navigate("/SignIn");
       })
       .catch((error) => {
         setIsLoading(false);
         setShowModal(false);
-        if (error.response) {
-          const { status } = error.response;
-          if (status === 400) {
-            setShowSwal(true);
-            setErrorMessages(error.errorCode);
-            setTitle("Sign Up Problem");
-            setIcon("error");
-            setTimeout(() => {
-              setShowSwal(false);
-              setErrorMessages(null);
-            }, 100);
-            return;
-          }
-        } else {
-          setShowSwal(true);
-          setErrorMessages(error.message);
-          setTitle("Sign Up Problem");
-          setIcon("error");
-          setTimeout(() => {
-            setShowSwal(false);
-            setErrorMessages(null);
-          }, 100);
-        }
+        setShowSwal(true);
+        setErrorMessages(error.message);
+        setIcon("error");
+        setTitle("Sign Up Problem");
       });
   };
 
@@ -223,6 +202,7 @@ const SignUpComponent = () => {
           errorMessages={errorMessages}
           title={title}
           icon={icon}
+          confirmCallBack={() => setShowSwal(false)}
         />
       </div>{" "}
       <div className="signUpLabel container-sm">

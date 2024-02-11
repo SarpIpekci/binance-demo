@@ -33,7 +33,7 @@ namespace BinanceReactDemo.Validation.DynamicValidationAndEncoded
 
             if (request == null)
             {
-                context.Result = new BadRequestObjectResult(new { message = DynamicValidationAttributeErrorMessages.RequestIsMissing });
+                context.Result = new BadRequestObjectResult(new { message = DynamicAttributeErrorMessages.RequestIsMissing });
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace BinanceReactDemo.Validation.DynamicValidationAndEncoded
 
             if (validationResultMethod == null)
             {
-                context.Result = new BadRequestObjectResult(new { message = DynamicValidationAttributeErrorMessages.InvalidOperatorType });
+                context.Result = new BadRequestObjectResult(new { message = DynamicAttributeErrorMessages.InvalidOperatorType });
                 return;
             }
 

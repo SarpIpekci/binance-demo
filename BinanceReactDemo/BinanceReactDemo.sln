@@ -11,11 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceReactDemo.Validation
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceReactDemo.DataTransferObject", "BinanceReactDemo.DataTransferObject\BinanceReactDemo.DataTransferObject.csproj", "{149E06CE-2D76-4426-AD48-D490B18AA255}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.Core", "BinanceReactDemo.Core\BinanceReactDemo.Core.csproj", "{8CD65EFE-9B53-46E6-BC00-1D8534D10A3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceReactDemo.Core", "BinanceReactDemo.Core\BinanceReactDemo.Core.csproj", "{8CD65EFE-9B53-46E6-BC00-1D8534D10A3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.DataAccessLayer", "BinanceReactDemo.DataAccessLayer\BinanceReactDemo.DataAccessLayer.csproj", "{B7DDB8E2-B562-46C7-BCF7-CD759DDC9AEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceReactDemo.DataAccessLayer", "BinanceReactDemo.DataAccessLayer\BinanceReactDemo.DataAccessLayer.csproj", "{B7DDB8E2-B562-46C7-BCF7-CD759DDC9AEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.Business", "BinanceReactDemo.Business\BinanceReactDemo.Business.csproj", "{47B31F46-D256-4207-8E1B-4F3E20ED671A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceReactDemo.Business", "BinanceReactDemo.Business\BinanceReactDemo.Business.csproj", "{47B31F46-D256-4207-8E1B-4F3E20ED671A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceReactDemo.CacheManager", "BinanceReactDemo.CacheManager\BinanceReactDemo.CacheManager.csproj", "{1673ED0B-4741-4D80-85BF-8BE0A4965B8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{47B31F46-D256-4207-8E1B-4F3E20ED671A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47B31F46-D256-4207-8E1B-4F3E20ED671A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47B31F46-D256-4207-8E1B-4F3E20ED671A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1673ED0B-4741-4D80-85BF-8BE0A4965B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1673ED0B-4741-4D80-85BF-8BE0A4965B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1673ED0B-4741-4D80-85BF-8BE0A4965B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1673ED0B-4741-4D80-85BF-8BE0A4965B8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

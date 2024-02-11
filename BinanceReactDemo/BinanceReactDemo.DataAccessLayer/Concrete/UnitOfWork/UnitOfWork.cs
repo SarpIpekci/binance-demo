@@ -12,7 +12,7 @@ using BinanceReactDemo.DataAccessLayer.Concrete.SignUp;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
-namespace SmartAdmin.DotNetSix.DataAccess.Concrete.UnitOfWork
+namespace BinanceReactDemo.DataAccessLayer.Concrete.UnitOfWork
 {
     /// <summary>
     /// Defines the repositories that will enter the transaction.

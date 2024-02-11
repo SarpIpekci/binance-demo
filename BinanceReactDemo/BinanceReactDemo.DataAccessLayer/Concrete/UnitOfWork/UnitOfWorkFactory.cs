@@ -3,7 +3,7 @@ using BinanceReactDemo.DataAccessLayer.Abstract.UnitOfWork;
 using Microsoft.Extensions.Logging;
 using System.Data.SqlClient;
 
-namespace SmartAdmin.DotNetSix.DataAccess.Concrete.UnitOfWork
+namespace BinanceReactDemo.DataAccessLayer.Concrete.UnitOfWork
 {
     public class UnitOfWorkFactory : IUnitOfWorkFactory
     {

@@ -78,6 +78,8 @@ function InputModalComponent({
   ];
 
   const buyService = () => {
+    setShowModal(true);
+    setIsLoading(true);
     AuthService.buy(
       parsedData.id,
       selectedItem,
@@ -88,45 +90,23 @@ function InputModalComponent({
       .then((rest) => {
         setIsLoading(false);
         setShowModalLoading(false);
+        setShowSwal(true);
         setIcon("success");
         setTitle(rest.message);
-        setShowSwal(true);
-        setTimeout(() => {
-          setShowSwal(false);
-          setErrorMessages(null);
-        }, 100);
       })
       .catch((error) => {
         setIsLoading(false);
         setShowModalLoading(false);
+        setShowModal(true);
         setErrorMessages(error.message);
-        if (error.response) {
-          const { status } = error.response;
-          if (status === 400) {
-            setShowSwal(true);
-            setErrorMessages(error.errorCode);
-            setTitle("Buy");
-            setIcon("error");
-            setTimeout(() => {
-              setShowSwal(false);
-              setErrorMessages(null);
-            }, 100);
-            return;
-          }
-        } else {
-          setShowSwal(true);
-          setErrorMessages(error.message);
-          setTitle("Buy");
-          setIcon("error");
-          setTimeout(() => {
-            setShowSwal(false);
-            setErrorMessages(null);
-          }, 100);
-        }
+        setTitle("Buy");
+        setIcon("error");
       });
   };
 
   const sellService = () => {
+    setShowModal(true);
+    setIsLoading(true);
     AuthService.sell(
       parsedData.id,
       selectedItem,
@@ -137,41 +117,18 @@ function InputModalComponent({
       .then((rest) => {
         setIsLoading(false);
         setShowModalLoading(false);
+        setShowSwal(true);
+        setTitle("Sell");
         setIcon("success");
         setTitle(rest.message);
-        setShowSwal(true);
-        setTimeout(() => {
-          setShowSwal(false);
-          setErrorMessages(null);
-        }, 100);
       })
       .catch((error) => {
         setIsLoading(false);
         setShowModalLoading(false);
+        setShowSwal(true);
+        setTitle("Sell");
+        setIcon("error");
         setErrorMessages(error.message);
-        if (error.response) {
-          const { status } = error.response;
-          if (status === 400) {
-            setShowSwal(true);
-            setErrorMessages(error.errorCode);
-            setTitle("Buy");
-            setIcon("error");
-            setTimeout(() => {
-              setShowSwal(false);
-              setErrorMessages(null);
-            }, 100);
-            return;
-          }
-        } else {
-          setShowSwal(true);
-          setErrorMessages(error.message);
-          setTitle("Buy");
-          setIcon("error");
-          setTimeout(() => {
-            setShowSwal(false);
-            setErrorMessages(null);
-          }, 100);
-        }
       });
   };
 
@@ -297,6 +254,7 @@ function InputModalComponent({
         errorMessages={errorMessages}
         title={title}
         icon={icon}
+        confirmCallBack={() => setShowSwal(false)}
       />
     </div>
   );

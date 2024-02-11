@@ -10,8 +10,8 @@ import { GenerateStrongKey } from "../../../GenerateKey/EncryptionKey ";
 
 const SignInComponent = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState("sarp");
+  const [password, setPassword] = useState("Srpic14.");
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
@@ -46,7 +46,6 @@ const SignInComponent = () => {
   }
 
   const formSubmitHandler = (e) => {
-    debugger;
     e.preventDefault();
     setShowModal(true);
     setIsLoading(true);
@@ -55,17 +54,12 @@ const SignInComponent = () => {
       setErrorMessages("Username or Password is required.");
       setIcon("error");
       setTitle("Sign In Problem");
-      setTimeout(() => {
-        setShowSwal(false);
-        setErrorMessages(null);
-      }, 100);
       setIsLoading(false);
       setShowModal(false);
       return;
     }
     AuthService.signIn(username, password)
       .then((rest) => {
-        debugger;
         const jsonData = JSON.stringify(rest);
         const replacedTurkishLetter = cleanTurkishCharacters(jsonData);
         const encryptedData = encryptData(
@@ -73,38 +67,17 @@ const SignInComponent = () => {
           GenerateStrongKey(32)
         );
         localStorage.setItem("userData", encryptedData);
-        setTimeout(() => {
-          setIsLoading(false);
-          setShowModal(false);
-          navigate("/");
-        }, 1000);
+        setShowModal(false);
+        setIsLoading(false);
+        navigate("/");
       })
       .catch((error) => {
         setIsLoading(false);
         setShowModal(false);
-        if (error.response) {
-          const { status } = error.response;
-          if (status === 400) {
-            setShowSwal(true);
-            setErrorMessages(error.errorCode);
-            setIcon("error");
-            setTitle("Sign In Problem");
-            setTimeout(() => {
-              setShowSwal(false);
-              setErrorMessages(null);
-            }, 100);
-            return;
-          }
-        } else {
-          setShowSwal(true);
-          setErrorMessages(error.message);
-          setIcon("error");
-          setTitle("Sign In Problem");
-          setTimeout(() => {
-            setShowSwal(false);
-            setErrorMessages(null);
-          }, 100);
-        }
+        setShowSwal(true);
+        setErrorMessages(error.message);
+        setIcon("error");
+        setTitle("Sign In Problem");
       });
   };
 
@@ -120,6 +93,7 @@ const SignInComponent = () => {
               <input
                 onChange={usernameOnChangeHandler}
                 type="text"
+                value={username}
                 className="form-control"
                 placeholder="Username"
               />
@@ -128,6 +102,7 @@ const SignInComponent = () => {
               <input
                 onChange={passwordOnChangeHandler}
                 type="password"
+                value={password}
                 className="form-control"
                 placeholder="Password"
                 autoComplete="current-password"
@@ -160,6 +135,7 @@ const SignInComponent = () => {
         errorMessages={errorMessages}
         title={title}
         icon={icon}
+        confirmCallBack={() => setShowSwal(false)}
       />
     </div>
   );
