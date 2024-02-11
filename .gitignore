@@ -37,3 +37,5 @@ yarn-error.log*
 /BinanceReactDemo/BinanceReactDemo.Core/obj
 /BinanceReactDemo/BinanceReactDemo.DataAccessLayer/bin/Debug/net6.0
 /BinanceReactDemo/BinanceReactDemo.DataAccessLayer/obj
+/BinanceReactDemo/BinanceReactDemo.CacheManager/obj
+/BinanceReactDemo/BinanceReactDemo.CacheManager/bin/Debug/net6.0
