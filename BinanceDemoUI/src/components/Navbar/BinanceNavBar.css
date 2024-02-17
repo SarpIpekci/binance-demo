@@ -1,32 +1,41 @@
 .navbar {
-  background-color: #222;
+  background-color: #003366;
 }
 
 .company-name {
   font-family: "Times New Roman", Times, serif;
   font-size: large;
-  color: #ea4f4c;
+  color: #f0f0f0;
   cursor: pointer;
+  font-size: 20px;
 }
 
-.company-name:hover {
-  color: #ea4f4c;
-}
-
-.labels {
-  color: white;
+.labelBuy {
+  color: #009670;
   cursor: pointer;
-  font-size: 15.5px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 700;
   font-family: "Roboto", sans-serif;
 }
 
-.labels:hover {
-  color: #ea4f4c;
+.labelSell {
+  color: #e84c47;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+}
+
+.labelShow {
+  color: #aed6e9;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
 }
 
 .login-button {
-  color: #fff !important;
+  color: #f0f0f0 !important;
   background-color: #ea4f4c !important;
   border-color: #ea4f4c !important;
   font-size: 15.5px;
@@ -38,4 +47,9 @@
   float: left !important;
   font-weight: bold;
   font-family: "Roboto", sans-serif;
+}
+
+.icon {
+  margin-right: 8px;
+  color: #f0f0f0;
 }

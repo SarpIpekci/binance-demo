@@ -12,6 +12,7 @@ import { DecryptData } from "../../DecryptionUtils/DecryptionUtility";
 import InputModalComponent from "../Modals/InputModals/InputModalComponent";
 import { AuthService } from "../../requestServices";
 import TableModalComponent from "../Modals/TableModals/TableModalComponent";
+import { FaBitcoin, FaMoneyBillWave, FaTable } from "react-icons/fa";
 
 function ProductNavbar({ userData }) {
   const [showModal, setShowModal] = useState(false);
@@ -81,13 +82,16 @@ function ProductNavbar({ userData }) {
               {userData && (
                 <>
                   <Nav.Link onClick={handleShowBuy}>
-                    <label className="labels">Buy Coin</label>
+                    <FaBitcoin className="icon" />
+                    <label className="labelBuy">Buy Coin</label>
                   </Nav.Link>
                   <Nav.Link onClick={handleShowSell}>
-                    <label className="labels">Sell Coin</label>
+                    <FaMoneyBillWave className="icon" />
+                    <label className="labelSell">Sell Coin</label>
                   </Nav.Link>
                   <Nav.Link onClick={handleShowTable}>
-                    <label className="labels">Show Coin</label>
+                    <FaTable className="icon" />
+                    <label className="labelShow">Show Coin</label>
                   </Nav.Link>
                 </>
               )}

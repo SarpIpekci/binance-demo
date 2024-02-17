@@ -16,7 +16,7 @@ namespace BinanceReactDemo.Common.LogHelper
             var columnOptions = new ColumnOptions();
 
             columnOptions.Message.ColumnName = "Message";
-            columnOptions.Message.DataLength = 512;
+            columnOptions.Message.DataLength = 2048;
 
             columnOptions.Level.ColumnName = "Level";
             columnOptions.Level.DataLength = 128;
@@ -25,10 +25,13 @@ namespace BinanceReactDemo.Common.LogHelper
             columnOptions.TimeStamp.ConvertToUtc = true;
 
             columnOptions.Exception.ColumnName = "Exception";
-            columnOptions.Exception.DataLength = 1024;
+            columnOptions.Exception.DataLength = 2048;
 
             columnOptions.Properties.ColumnName = "Properties";
             columnOptions.LogEvent.ExcludeAdditionalProperties = true;
+
+            columnOptions.Properties.ColumnName = "LogEvent";
+            columnOptions.Exception.DataLength = 2048;
 
             return columnOptions;
         }

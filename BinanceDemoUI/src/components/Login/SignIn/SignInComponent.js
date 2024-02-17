@@ -10,8 +10,8 @@ import { GenerateStrongKey } from "../../../GenerateKey/EncryptionKey ";
 
 const SignInComponent = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("sarp");
-  const [password, setPassword] = useState("Srpic14.");
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
