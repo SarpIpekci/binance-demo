@@ -4,6 +4,7 @@ import BarChartComponent from "./components/Charts/BarChartComponent";
 import SignIn from "./components/Login/SignIn/SignInComponent";
 import SignUp from "./components/Login/SignUp/SignUpComponent";
 import { Route, Routes } from "react-router-dom";
+import "../src/App.css";
 
 function App() {
   const [userData, setUserData] = useState();
