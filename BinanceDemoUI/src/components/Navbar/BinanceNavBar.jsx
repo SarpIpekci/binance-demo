@@ -13,6 +13,7 @@ import InputModalComponent from "../Modals/InputModals/InputModalComponent";
 import { AuthService } from "../../requestServices";
 import TableModalComponent from "../Modals/TableModals/TableModalComponent";
 import { FaBitcoin, FaMoneyBillWave, FaTable } from "react-icons/fa";
+import { SiBinance } from "react-icons/si";
 
 function ProductNavbar({ userData }) {
   const [showModal, setShowModal] = useState(false);
@@ -70,7 +71,14 @@ function ProductNavbar({ userData }) {
       <Navbar expand="lg" className="navbar">
         <Container fluid>
           <Nav.Link as={Link} to="/" className="company-name">
-            <label className="company-name">Binance</label>
+            <Row>
+              <Col md={2}>
+                <SiBinance className="company-icon" />
+              </Col>
+              <Col md={8}>
+                <label className="company-name">Binance</label>
+              </Col>
+            </Row>
           </Nav.Link>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">

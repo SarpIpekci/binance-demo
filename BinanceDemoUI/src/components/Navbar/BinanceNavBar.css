@@ -1,11 +1,11 @@
 .navbar {
-  background-color: #003366;
+  background-color: #024959;
 }
 
 .company-name {
   font-family: "Times New Roman", Times, serif;
   font-size: large;
-  color: #f0f0f0;
+  color: #f28705;
   cursor: pointer;
   font-size: 20px;
 }
@@ -52,4 +52,11 @@
 .icon {
   margin-right: 8px;
   color: #f0f0f0;
+}
+
+.company-icon {
+  color: #c43302;
+  font-size: 20px;
+  text-align: center;
+  justify-content: center;
 }

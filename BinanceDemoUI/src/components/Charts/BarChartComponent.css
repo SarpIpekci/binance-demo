@@ -1,6 +1,53 @@
-.test {
-  display: flex;
+.container-sm {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.chartContainer {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  height: 500px;
+  background-color: white;
+}
+
+.no-arrow .custom-header {
+  pointer-events: none;
+  background-color: #eaeded;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #024959 !important;
+  color: white !important;
+}
+
+.no-arrow .accordion-button::after {
+  display: none;
+}
+
+.my-icon-buy {
+  color: #267365;
+  font-size: 40px;
+  text-align: center;
   justify-content: center;
-  width: 50% !important;
-  height: 60% !important;
+}
+
+.my-icon-table {
+  color: #b7bf99;
+  font-size: 40px;
+  text-align: center;
+  justify-content: center;
+}
+
+.my-icon-sell {
+  color: #ea4f4c;
+  font-size: 40px;
+  text-align: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .chartContainer {
+    max-width: 100%;
+  }
 }
