@@ -18,9 +18,7 @@ namespace BinanceReactDemo.Validation.HtmlEncoded
         /// <param name="context">Action Executing Context</param>
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var request = context.ActionArguments["request"];
-
-            if (request == null)
+            if (!context.ActionArguments.Any())
             {
                 context.Result = new BadRequestObjectResult(new { message = DynamicAttributeErrorMessages.RequestIsMissing });
                 return;
@@ -28,11 +26,11 @@ namespace BinanceReactDemo.Validation.HtmlEncoded
 
             if (context.ActionArguments.Count > 0)
             {
-                foreach (var argument in context.ActionArguments)
+                foreach (var actionArguments in context.ActionArguments.Values)
                 {
-                    if (argument.Value != null)
+                    if (actionArguments != null)
                     {
-                        EncodeStringProperties(argument.Value);
+                        EncodeStringProperties(actionArguments);
                     }
                 }
             }

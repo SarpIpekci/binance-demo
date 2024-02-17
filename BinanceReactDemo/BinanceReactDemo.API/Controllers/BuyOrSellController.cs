@@ -31,22 +31,15 @@ namespace BinanceReactDemo.API.Controllers
         [DynamicHtmlEncode]
         public async Task<IActionResult> BuyCoinForm([FromBody] BuyCoinDto request)
         {
-            try
-            {
-                var isSuccess = await _buyCoinService.BuyCoins(request);
+            var isSuccess = await _buyCoinService.BuyCoins(request);
 
-                if (isSuccess)
-                {
-                    return Ok(new { message = UserInformationMessages.BuyCoin });
-                }
-                else
-                {
-                    return BadRequest(new { message = UserInformationErrorMessages.BuyCoinError });
-                }
-            }
-            catch (Exception exception)
+            if (isSuccess)
             {
-                return BadRequest(new { message = exception.Message });
+                return Ok(new { message = UserInformationMessages.BuyCoin });
+            }
+            else
+            {
+                return BadRequest(new { message = UserInformationErrorMessages.BuyCoinError });
             }
         }
 
@@ -56,22 +49,15 @@ namespace BinanceReactDemo.API.Controllers
         [DynamicHtmlEncode]
         public async Task<IActionResult> SellCoinForm([FromBody] SellCoinDto request)
         {
-            try
-            {
-                var isSuccess = await _sellCoinService.SellCoins(request);
+            var isSuccess = await _sellCoinService.SellCoins(request);
 
-                if (isSuccess)
-                {
-                    return Ok(new { message = UserInformationMessages.SellCoin });
-                }
-                else
-                {
-                    return BadRequest(new { message = UserInformationErrorMessages.SellCoinError });
-                }
-            }
-            catch (Exception exception)
+            if (isSuccess)
             {
-                return BadRequest(new { message = exception.Message });
+                return Ok(new { message = UserInformationMessages.SellCoin });
+            }
+            else
+            {
+                return BadRequest(new { message = UserInformationErrorMessages.SellCoinError });
             }
         }
     }

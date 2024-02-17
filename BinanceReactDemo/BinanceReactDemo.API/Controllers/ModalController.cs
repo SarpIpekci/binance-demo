@@ -20,16 +20,9 @@ namespace BinanceReactDemo.API.Controllers
         [HttpGet("fillModal")]
         public async Task<IActionResult> FillModal()
         {
-            try
-            {
-                var result = await GetFillModal();
+            var result = await GetFillModal();
 
-                return Ok(result);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(new { message = exception.Message });
-            }
+            return Ok(result);
         }
 
         private async Task<List<BinanceItem>> GetFillModal()

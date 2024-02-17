@@ -4,6 +4,7 @@ using BinanceReactDemo.Common.UserInformatiomErrorMessages;
 using BinanceReactDemo.Common.UserInformationMessages;
 using BinanceReactDemo.DataTransferObject.Models;
 using BinanceReactDemo.Validation.DynamicValidationAndEncoded;
+using BinanceReactDemo.Validation.HtmlEncoded;
 using BinanceReactDemo.Validation.SignIn;
 using BinanceReactDemo.Validation.SignUp;
 using BinanceReactDemo.Validation.XSSControl;
@@ -27,13 +28,9 @@ namespace BinanceReactDemo.API.Controllers
         [HttpPost("signIn")]
         [DynamicValidation(typeof(SignInValidation))]
         [DynamicXssControl]
+        [DynamicHtmlEncode]
         public async Task<IActionResult> SignIn([FromBody] SignInDto request)
         {
-            if (request.Username.Equals("sarp"))
-            {
-                throw new Exception("test");
-            }
-
             var exits = await _signInService.CheckCustomerExits(request);
 
             if (exits)
@@ -51,6 +48,7 @@ namespace BinanceReactDemo.API.Controllers
         [HttpPost("signUp")]
         [DynamicValidation(typeof(SignUpValidation))]
         [DynamicXssControl]
+        [DynamicHtmlEncode]
         public async Task<IActionResult> SignUp([FromBody] SignUpDto request)
         {
             var isSuccess = await _signUpService.CreateCustomer(request);

@@ -7,27 +7,32 @@ using System.Text.RegularExpressions;
 namespace BinanceReactDemo.Validation.XSSControl
 {
     /// <summary>
-    /// Dynamic Html Encode Attribute
+    /// Dynamic XSS Attribute
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public class DynamicXssControlAttribute: ActionFilterAttribute
     {
         private const string pattern = @"('|""|--|\/\*|\*\/|;|\b(ALTER|CREATE|DELETE|DROP|SELECT|INSERT|UPDATE|TRUNCATE|REPLACE|GRANT|REVOKE|LOAD|CALL)\b)";
 
+        /// <summary>
+        /// Dynamic XSS Attribute
+        /// </summary>
+        /// <param name="context"></param>
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var request = context.ActionArguments["request"];
-
-            if (request == null)
+            if (!context.ActionArguments.Any())
             {
                 context.Result = new BadRequestObjectResult(new { message = DynamicAttributeErrorMessages.RequestIsMissing });
                 return;
             }
 
-            if (IsMatchFoundInAnyProperty(request, pattern))
+            foreach (var actionArguments in context.ActionArguments.Values)
             {
-                context.Result = new BadRequestObjectResult(new { message = DynamicAttributeErrorMessages.InvalidInputDetected });
-                return;
+                if (actionArguments != null && IsMatchFoundInAnyProperty(actionArguments, pattern))
+                {
+                    context.Result = new BadRequestObjectResult(new { message = DynamicAttributeErrorMessages.InvalidInputDetected });
+                    return;
+                }
             }
 
             base.OnActionExecuting(context);

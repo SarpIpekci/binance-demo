@@ -1,4 +1,6 @@
 ﻿using BinanceReactDemo.Business.Abstract.CustomerCoinTable;
+using BinanceReactDemo.Validation.HtmlEncoded;
+using BinanceReactDemo.Validation.XSSControl;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BinanceReactDemo.API.Controllers
@@ -15,48 +17,29 @@ namespace BinanceReactDemo.API.Controllers
         }
 
         [HttpGet("getBuyCoin")]
+        [DynamicXssControl]
+        [DynamicHtmlEncode]
         public async Task<IActionResult> GetBuyCoin(int customerId)
         {
-            try
-            {
-                var result = await _customerCoinTableService.GetBuyCoinsById(customerId);
+            var result = await _customerCoinTableService.GetBuyCoinsById(customerId);
 
-                return Ok(result);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(new { message = exception.Message });
-            }
+            return Ok(result);
         }
 
         [HttpGet("getSellCoin")]
         public async Task<IActionResult> GetSellCoin(int customerId)
         {
-            try
-            {
-                var result = await _customerCoinTableService.GetSellCoinsById(customerId);
+            var result = await _customerCoinTableService.GetSellCoinsById(customerId);
 
-                return Ok(result);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(new { message = exception.Message });
-            }
+            return Ok(result);
         }
 
         [HttpGet("getAllCoins")]
         public async Task<IActionResult> GetAllCoins(int customerId)
         {
-            try
-            {
-                var result = await _customerCoinTableService.GetAllCoinsById(customerId);
+            var result = await _customerCoinTableService.GetAllCoinsById(customerId);
 
-                return Ok(result);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(new { message = exception.Message });
-            }
+            return Ok(result);
         }
     }
 }
