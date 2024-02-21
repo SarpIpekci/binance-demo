@@ -23,6 +23,7 @@ const InputCardComponent = ({
                 <Col
                   key={index}
                   md={column.md || Math.floor(12 / columns.length)}
+                  className="custom-card-text"
                 >
                   {column.text}
                 </Col>

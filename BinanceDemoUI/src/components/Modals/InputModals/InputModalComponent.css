@@ -1,5 +1,5 @@
 .dropdown-menu {
-  max-height: 150px !important;
+  max-height: 200px !important;
   overflow-y: auto !important;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .label-style {
-  color: red !important;
+  color: yellow !important;
 }
 
 .input-group {
@@ -40,6 +40,42 @@
 }
 
 .custom-header {
-  background-color: #ea4f4c;
-  color: #222;
+  background-color: #024959 !important;
+  color: white !important;
+}
+
+.left-aligned-label {
+  text-align: left;
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.dropdown-toggle {
+  width: 100%;
+}
+
+.custom-header .btn-close {
+  color: white !important;
+  background-color: white !important;
+  border-radius: 50%;
+}
+
+.custom-header .btn-close:hover {
+  background-color: #f0f0f0;
+}
+
+.custom-header .btn-close:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.dropdown-menu .dropdown-item.active,
+.dropdown-menu .dropdown-item:active {
+  background-color: #024959;
+}
+
+.custom-dropdown-container {
+  display: flex;
+  justify-content: start;
 }

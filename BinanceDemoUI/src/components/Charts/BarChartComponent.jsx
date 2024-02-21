@@ -5,10 +5,6 @@ import Accordion from "react-bootstrap/Accordion";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "../Charts/BarChartComponent.css";
-import InputCardComponent from "../InputCard/InputCardComponent";
-import { FaMoneyBill } from "react-icons/fa";
-import { MdOutlineTableView } from "react-icons/md";
-import { MdSell } from "react-icons/md";
 import {
   Chart as ChartJS,
   BarElement,
@@ -17,12 +13,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import TradeInputComponent from "../TradeInputs/TradeInputComponent";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const BarChartComponent = ({ setUserData }) => {
+const BarChartComponent = ({ setUserData, userDataValue }) => {
   const chartReference = useRef(null);
-
   const [data, setData] = useState({
     labels: [],
     datasets: [],
@@ -107,54 +103,11 @@ const BarChartComponent = ({ setUserData }) => {
   return (
     <div className="container-sm">
       <Row>
-        <Col
-          ms={4}
-          className="d-flex justify-content-center align-items-center"
-        >
-          <InputCardComponent
-            title={false}
-            text={false}
-            titleValue={""}
-            textValue={""}
-            columns={[
-              { text: <FaMoneyBill className="my-icon-buy" />, md: 6 },
-              { text: "Buy New Coins", md: 6 },
-            ]}
-          />
-        </Col>
-
-        <Col
-          ms={4}
-          className="d-flex justify-content-center align-items-center"
-        >
-          <InputCardComponent
-            title={false}
-            text={false}
-            titleValue={""}
-            textValue={""}
-            columns={[
-              { text: <MdSell className="my-icon-sell" />, md: 6 },
-              { text: "Sell The Coins", md: 6 },
-            ]}
-          />
-        </Col>
-
-        <Col
-          ms={4}
-          className="d-flex justify-content-center align-items-center"
-        >
-          <InputCardComponent
-            title={false}
-            text={false}
-            titleValue={""}
-            textValue={""}
-            columns={[
-              { text: <MdOutlineTableView className="my-icon-table" />, md: 6 },
-              { text: "Show All Trades", md: 6 },
-            ]}
-          />
-        </Col>
-
+        {userDataValue && (
+          <>
+            <TradeInputComponent />
+          </>
+        )}
         <Col md={12}>
           <Accordion className="no-arrow mt-5">
             <Accordion.Item>

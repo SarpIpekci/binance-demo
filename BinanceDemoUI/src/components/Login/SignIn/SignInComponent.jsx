@@ -1,23 +1,36 @@
 import "../SignIn/SignInComponent.css";
 import React, { useState } from "react";
 import { AuthService } from "../../../requestServices";
-import { Card, Form, Button } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Col,
+  Container,
+  Row,
+  Image,
+  InputGroup,
+} from "react-bootstrap";
 import LoadingModalComponents from "../../Modals/LoadingModals/LoadingModalComponent";
 import { useNavigate, NavLink } from "react-router-dom";
 import SwalComponent from "../../Swals/SwalComponent";
 import { encryptData } from "../../../EncryptionUtils/EncryptionUtility";
 import { GenerateStrongKey } from "../../../GenerateKey/EncryptionKey ";
+import { SiBinance } from "react-icons/si";
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const SignInComponent = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
   const [showSwal, setShowSwal] = useState(false);
   const [icon, setIcon] = useState();
-  const [title, setTitle] = useState();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const usernameOnChangeHandler = (e) => {
     setUsername(e.target.value);
@@ -53,7 +66,6 @@ const SignInComponent = () => {
       setShowSwal(true);
       setErrorMessages("Username or Password is required.");
       setIcon("error");
-      setTitle("Sign In Problem");
       setIsLoading(false);
       setShowModal(false);
       return;
@@ -77,54 +89,98 @@ const SignInComponent = () => {
         setShowSwal(true);
         setErrorMessages(error.message);
         setIcon("error");
-        setTitle("Sign In Problem");
       });
   };
 
   return (
-    <div className="signIn container-sm">
-      <Card>
-        <div className="card-header">
-          <h3>Sign In</h3>
-        </div>
-        <div className="card-body">
-          <Form onSubmit={formSubmitHandler}>
-            <div className="mb-3">
-              <input
-                onChange={usernameOnChangeHandler}
-                type="text"
-                value={username}
-                className="form-control"
-                placeholder="Username"
-              />
+    <section className="vh-80">
+      <Container fluid>
+        <Row>
+          <Col sm={6} className="text-black">
+            <div className="px-5 ms-xl-4">
+              <i
+                className="fas fa-crow fa-2x me-3 pt-5 mt-xl-4"
+                style={{ color: "#709085" }}
+              ></i>
+              <span className="h1 fw-bold mb-0">
+                {" "}
+                <SiBinance className="company-icon" />
+              </span>
             </div>
-            <div className="mb-3">
-              <input
-                onChange={passwordOnChangeHandler}
-                type="password"
-                value={password}
-                className="form-control"
-                placeholder="Password"
-                autoComplete="current-password"
-              />
+
+            <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+              <Form style={{ width: "23rem" }} onSubmit={formSubmitHandler}>
+                <h3
+                  className="fw-normal mb-3 pb-3"
+                  style={{ letterSpacing: "1px" }}
+                >
+                  Log in
+                </h3>
+
+                <Form.Group className="form-outline mb-4">
+                  <Form.Control
+                    type="text"
+                    id="form2Example18"
+                    className="form-control form-control-lg"
+                    onChange={usernameOnChangeHandler}
+                    value={username}
+                    placeholder="Username"
+                  />
+                </Form.Group>
+
+                <Form.Group className="form-outline mb-4">
+                  <InputGroup>
+                    <Form.Control
+                      type={showPassword ? "text" : "password"}
+                      id="form2Example28"
+                      className="form-control form-control-lg"
+                      value={password}
+                      onChange={passwordOnChangeHandler}
+                      placeholder="Password"
+                    />
+                    <Button
+                      variant="outline-secondary"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                    </Button>
+                  </InputGroup>
+                </Form.Group>
+
+                <div className="pt-1 mb-4">
+                  <Button
+                    className="btn btn-info btn-lg btn-block"
+                    type="submit"
+                    style={{
+                      backgroundColor: "#024959",
+                      borderColor: "#024959",
+                      color: "white",
+                      fontFamily: "Roboto sans-serif",
+                    }}
+                  >
+                    Login
+                  </Button>
+                </div>
+
+                <p>
+                  Don't have an account?{" "}
+                  <NavLink className="custom-signIn" to="/SignUp">
+                    Register here
+                  </NavLink>
+                </p>
+              </Form>
             </div>
-            <Button
-              type="submit"
-              className="btn btn-primary float-end login_btn"
-            >
-              Login
-            </Button>
-          </Form>
-        </div>
-        <div className="card-footer">
-          <div className="d-flex justify-content-center links">
-            Don't have an account?
-            <NavLink className="custom-signIn" to="/SignUp">
-              Sign Up
-            </NavLink>
-          </div>
-        </div>
-      </Card>
+          </Col>
+          <Col sm={6} className="d-none d-sm-block p-0">
+            <Image
+              src="Login.jpg"
+              alt="Login image"
+              className="custom-image"
+              style={{ objectFit: "cover", objectPosition: "right" }}
+            />
+          </Col>
+        </Row>
+      </Container>
       <LoadingModalComponents
         show={showModal}
         onClose={handleModalClose}
@@ -133,11 +189,10 @@ const SignInComponent = () => {
       <SwalComponent
         showSwal={showSwal}
         errorMessages={errorMessages}
-        title={title}
         icon={icon}
         confirmCallBack={() => setShowSwal(false)}
       />
-    </div>
+    </section>
   );
 };
 export default SignInComponent;

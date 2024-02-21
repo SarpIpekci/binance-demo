@@ -1,21 +1,21 @@
-import { useEffect } from "react";
 import Swal from "sweetalert2";
+import "../Swals/SwalComponent.css";
 
-const SwalComponent = ({
-  showSwal,
-  errorMessages,
-  title,
-  icon,
-  confirmCallBack,
-}) => {
+const SwalComponent = ({ showSwal, errorMessages, icon, confirmCallBack }) => {
+  let newErrorMessages;
+  if (errorMessages.length > 0) {
+    newErrorMessages = errorMessages.join("<br>");
+  }
+
   if (showSwal) {
     Swal.fire({
-      title: title,
-      text: errorMessages,
+      html: newErrorMessages,
       icon: icon,
       showConfirmButton: true,
       allowOutsideClick: false,
       preConfirm: confirmCallBack,
+      confirmButtonColor: "#024959",
+      animation: true,
     });
   }
 
