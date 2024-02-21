@@ -29,9 +29,9 @@ namespace BinanceReactDemo.Business.Concrete
         /// <exception cref="ArgumentException">Exception</exception>
         public async Task<bool> BuyCoins(BuyCoinDto buyCoin)
         {
-            await _cacheManager.RemoveAsync(CacheConstants.GetBuyCoinsById);
+            await _cacheManager.RemoveAsync($"{CacheConstants.GetBuyCoinsById}:{buyCoin.CustomerId}");
 
-            await _cacheManager.RemoveAsync(CacheConstants.GetAllCoinsById);
+            await _cacheManager.RemoveAsync($"{CacheConstants.GetAllCoinsById}:{buyCoin.CustomerId}");
 
             using var unitOfWork = _unitOfWorkFactory.Create();
 

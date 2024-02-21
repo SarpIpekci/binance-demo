@@ -3,7 +3,6 @@ using BinanceReactDemo.CacheManager.Abstract;
 using BinanceReactDemo.Common.Caching;
 using BinanceReactDemo.DataAccessLayer.Abstract.UnitOfWork;
 using BinanceReactDemo.DataTransferObject.Models;
-using System.Collections.Generic;
 
 namespace BinanceReactDemo.Business.Concrete.CustomerCoinTable
 {
@@ -26,7 +25,7 @@ namespace BinanceReactDemo.Business.Concrete.CustomerCoinTable
         /// <exception cref="ArgumentException">Exception</exception>
         public async Task<IEnumerable<CustomerCoinAllTableDto>> GetAllCoinsById(int customerId)
         {
-            var allCoinsFromCache = await _cacheManager.GetAsync<IEnumerable<CustomerCoinAllTableDto>>(CacheConstants.GetAllCoinsById);
+            var allCoinsFromCache = await _cacheManager.GetAsync<IEnumerable<CustomerCoinAllTableDto>>($"{CacheConstants.GetAllCoinsById}:{customerId}");
 
             if (allCoinsFromCache != null)
             {
@@ -41,7 +40,7 @@ namespace BinanceReactDemo.Business.Concrete.CustomerCoinTable
 
             unitOfWork.CloseConnection();
 
-            await _cacheManager.AddAsync(CacheConstants.GetAllCoinsById, allCoin);
+            await _cacheManager.AddAsync($"{CacheConstants.GetAllCoinsById}:{customerId}", allCoin);
 
             return allCoin;
         }
@@ -54,7 +53,7 @@ namespace BinanceReactDemo.Business.Concrete.CustomerCoinTable
         /// <exception cref="ArgumentException">Exception</exception>
         public async Task<IEnumerable<CustomerCoinBuyTableDto>> GetBuyCoinsById(int customerId)
         {
-            var buyCoinsFromCache = await _cacheManager.GetAsync<IEnumerable<CustomerCoinBuyTableDto>>(CacheConstants.GetBuyCoinsById);
+            var buyCoinsFromCache = await _cacheManager.GetAsync<IEnumerable<CustomerCoinBuyTableDto>>($"{CacheConstants.GetBuyCoinsById}:{customerId}");
 
             if (buyCoinsFromCache != null)
             {
@@ -69,7 +68,7 @@ namespace BinanceReactDemo.Business.Concrete.CustomerCoinTable
 
             unitOfWork.CloseConnection();
 
-            await _cacheManager.AddAsync(CacheConstants.GetBuyCoinsById, buyCoin);
+            await _cacheManager.AddAsync($"{CacheConstants.GetBuyCoinsById}:{customerId}", buyCoin);
 
             return buyCoin;
         }
@@ -82,7 +81,7 @@ namespace BinanceReactDemo.Business.Concrete.CustomerCoinTable
         /// <exception cref="ArgumentException">Exception</exception>
         public async Task<IEnumerable<CustomerCoinSellTableDto>> GetSellCoinsById(int customerId)
         {
-            var sellCoinsFromCache = await _cacheManager.GetAsync<IEnumerable<CustomerCoinSellTableDto>>(CacheConstants.GetSellCoinsById);
+            var sellCoinsFromCache = await _cacheManager.GetAsync<IEnumerable<CustomerCoinSellTableDto>>($"{CacheConstants.GetSellCoinsById}:{customerId}");
 
             if (sellCoinsFromCache != null)
             {
@@ -97,7 +96,7 @@ namespace BinanceReactDemo.Business.Concrete.CustomerCoinTable
 
             unitOfWork.CloseConnection();
 
-            await _cacheManager.AddAsync(CacheConstants.GetSellCoinsById, sellCoin);
+            await _cacheManager.AddAsync($"{CacheConstants.GetSellCoinsById}:{customerId}", sellCoin);
 
             return sellCoin;
         }

@@ -16,7 +16,12 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<BarChartComponent setUserData={setUserData} />}
+            element={
+              <BarChartComponent
+                setUserData={setUserData}
+                userDataValue={userData}
+              />
+            }
           />
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/SignUp" element={<SignUp />} />

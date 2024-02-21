@@ -5,6 +5,8 @@ import LoadingModalComponents from "../LoadingModals/LoadingModalComponent";
 import { AuthService } from "../../../requestServices";
 import SwalComponent from "../../Swals/SwalComponent";
 import "../InputModals/InputModalComponent.css";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function InputModalComponent({
   buyOrSellCoinModal,
@@ -13,9 +15,13 @@ function InputModalComponent({
   modalTitle,
   binanceItem,
   buttonName,
+  buttonStyle,
 }) {
   const handleClose = () => {
     setShowModal(false);
+    setDoubleValue(1);
+    setCoinValue(0);
+    setSelectedItem("Please Select Coin");
   };
   const [doubleValue, setDoubleValue] = useState(1);
   const [coinValue, setCoinValue] = useState(0);
@@ -162,82 +168,84 @@ function InputModalComponent({
               <Modal.Title>{modalTitle}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="panel-default">
-                <div className="panel-body">
-                  <div className="row">
-                    <div className="mb-3">
-                      {" "}
+              <Row>
+                <Col md={6} className="custom-dropdown-container">
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      id="dropdown-basic"
+                      className="dropdown-toggle custom-dropdown"
+                    >
+                      {selectedItem}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="dropdown-menu custom-dropdown-menu">
+                      {binanceItemWithDefault.map((item) => (
+                        <Dropdown.Item
+                          key={item.symbol}
+                          eventKey={item.symbol}
+                          onClick={() => handleItemClick(item.symbol)}
+                        >
+                          {item.symbol}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Col>
+                <Col>
+                  <Row>
+                    {" "}
+                    {coinValue !== 0 && (
+                      <label className="input-label">Coin Value</label>
+                    )}
+                  </Row>
+                  <Row>
+                    {" "}
+                    {coinValue !== 0 && (
                       <div className="form-group">
-                        <Dropdown>
-                          <Dropdown.Toggle
-                            id="dropdown-basic"
-                            className="dropdown-toggle"
-                          >
-                            {selectedItem}
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu className="dropdown-menu">
-                            {binanceItemWithDefault.map((item) => (
-                              <Dropdown.Item
-                                key={item.symbol}
-                                eventKey={item.symbol}
-                                onClick={() => handleItemClick(item.symbol)}
-                              >
-                                {item.symbol}
-                              </Dropdown.Item>
-                            ))}
-                          </Dropdown.Menu>
-                        </Dropdown>
+                        <label style={{ color: "#F23030" }}>{coinValue}</label>
                       </div>
-                    </div>
-                    <div className="mb-3">
-                      {" "}
-                      {coinValue !== 0 && (
-                        <div className="form-group">
-                          <label style={{ color: "red" }}>{coinValue}</label>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="mb-3">
-                      <label className="input-label">
-                        {buyOrSellCoinModal
-                          ? "Buy Quantity:"
-                          : "Sell Quantity:"}
-                      </label>
-                      <div className="form-group">
-                        <InputGroup className="mb-3">
-                          <Form.Control
-                            type="number"
-                            min="1"
-                            value={doubleValue}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="mb-3">
-                      <label className="input-label">Sum Of Quantity:</label>
-                      <div className="form-group">
-                        <InputGroup className="mb-3">
-                          <Form.Control
-                            type="number"
-                            min="1"
-                            value={sumOfCoin || 0}
-                            disabled
-                            className="disabled-input"
-                          />
-                        </InputGroup>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    )}
+                  </Row>
+                </Col>
+              </Row>
+              <Row>
+                <label className="input-label mt-5 left-aligned-label">
+                  {buyOrSellCoinModal ? "Buy Quantity:" : "Sell Quantity:"}
+                </label>
+              </Row>
+              <Row>
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    type="number"
+                    min="1"
+                    value={doubleValue}
+                    onChange={handleInputChange}
+                  />
+                </InputGroup>
+              </Row>
+              <Row>
+                <label className="input-label mt-3 left-aligned-label">
+                  Sum Of Quantity:
+                </label>
+              </Row>
+              <Row>
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    type="number"
+                    min="1"
+                    value={sumOfCoin || 0}
+                    disabled
+                    className="disabled-input"
+                  />
+                </InputGroup>
+              </Row>
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit" variant="success" onClick={handleClose}>
+              <Button
+                type="submit"
+                style={{ backgroundColor: buttonStyle, border: "none" }}
+                variant="success"
+                onClick={handleClose}
+              >
                 {buttonName}
               </Button>
             </Modal.Footer>

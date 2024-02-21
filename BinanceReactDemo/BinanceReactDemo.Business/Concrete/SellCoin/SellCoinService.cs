@@ -32,9 +32,9 @@ namespace BinanceReactDemo.Business.Concrete.SellCoin
         /// <exception cref="ArgumentException">Exception</exception>
         public async Task<bool> SellCoins(SellCoinDto sellCoin)
         {
-            await _cacheManager.RemoveAsync(CacheConstants.GetSellCoinsById);
+            await _cacheManager.RemoveAsync($"{CacheConstants.GetSellCoinsById}:{sellCoin.CustomerId}");
 
-            await _cacheManager.RemoveAsync(CacheConstants.GetAllCoinsById);
+            await _cacheManager.RemoveAsync($"{CacheConstants.GetAllCoinsById}:{sellCoin.CustomerId}");
 
             using var unitOfWork = _unitOfWorkFactory.Create();
 

@@ -26,22 +26,27 @@
 }
 
 .nav-link.active {
-  color: #ea4f4c !important;
+  color: white !important;
+  background-color: #024959 !important;
   font-weight: bold !important;
 }
 
 .pagination .page-item {
-  --bs-pagination-color: #222 !important;
-  --bs-pagination-bg: #222 !important;
+  --bs-pagination-color: #024959 !important;
+  --bs-pagination-bg: #024959 !important;
 }
 
 .pagination .page-link {
-  color: #ea4f4c !important;
-  font-weight: 500 !important;
-  --bs-pagination-active-bg: #daf7a6 !important;
-  --bs-pagination-active-border-color: #daf7a6 !important;
+  color: white !important;
+  font-weight: 700 !important;
+  --bs-pagination-active-bg: white !important;
+  --bs-pagination-active-border-color: #024959 !important;
 }
 
 .active > .page-link {
-  color: #222 !important;
+  color: #024959 !important;
+}
+
+.page-item:hover .page-link {
+  color: #024959 !important;
 }

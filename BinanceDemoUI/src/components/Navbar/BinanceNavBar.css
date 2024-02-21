@@ -10,37 +10,17 @@
   font-size: 20px;
 }
 
-.labelBuy {
-  color: #009670;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
-  font-family: "Roboto", sans-serif;
-}
-
-.labelSell {
-  color: #e84c47;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
-  font-family: "Roboto", sans-serif;
-}
-
-.labelShow {
-  color: #aed6e9;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
-  font-family: "Roboto", sans-serif;
-}
-
 .login-button {
-  color: #f0f0f0 !important;
-  background-color: #ea4f4c !important;
-  border-color: #ea4f4c !important;
-  font-size: 15.5px;
-  font-weight: bold;
-  font-family: "Roboto", sans-serif;
+  background-color: #024959 !important;
+  border: none !important;
+  width: 100px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+  margin-bottom: 14px;
 }
 
 .input-label {
@@ -49,14 +29,36 @@
   font-family: "Roboto", sans-serif;
 }
 
-.icon {
-  margin-right: 8px;
-  color: #f0f0f0;
-}
-
 .company-icon {
   color: #c43302;
   font-size: 20px;
   text-align: center;
   justify-content: center;
+}
+
+.login-logout-icon {
+  color: #f2cb05;
+  font-size: 22px;
+  text-align: center;
+  justify-content: center;
+}
+
+.login-logout-text {
+  color: white;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+}
+
+.userInfo {
+  background-color: #024959 !important;
+  border: none !important;
+  width: 100px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+  margin: auto 0;
 }

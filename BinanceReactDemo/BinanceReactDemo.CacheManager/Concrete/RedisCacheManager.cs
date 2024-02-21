@@ -21,7 +21,7 @@ namespace BinanceReactDemo.CacheManager.Concrete
         }
 
         /// <summary>
-        /// Add data in Redis Cacher
+        /// Add data in Redis Cache
         /// </summary>
         /// <param name="key">Cache Key</param>
         /// <param name="value">Cache Value</param>

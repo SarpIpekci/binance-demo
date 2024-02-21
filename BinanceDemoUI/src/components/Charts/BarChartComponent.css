@@ -25,27 +25,6 @@
   display: none;
 }
 
-.my-icon-buy {
-  color: #267365;
-  font-size: 40px;
-  text-align: center;
-  justify-content: center;
-}
-
-.my-icon-table {
-  color: #b7bf99;
-  font-size: 40px;
-  text-align: center;
-  justify-content: center;
-}
-
-.my-icon-sell {
-  color: #ea4f4c;
-  font-size: 40px;
-  text-align: center;
-  justify-content: center;
-}
-
 @media (max-width: 768px) {
   .chartContainer {
     max-width: 100%;

@@ -6,4 +6,12 @@
   cursor: pointer;
   height: 100px !important;
   width: 250px;
+  border-radius: 10px;
+}
+
+.custom-card-text {
+  color: #888f98;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
 }

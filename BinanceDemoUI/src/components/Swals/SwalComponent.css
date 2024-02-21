@@ -1,0 +1,4 @@
+.swal2-modal .swal2-styled:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

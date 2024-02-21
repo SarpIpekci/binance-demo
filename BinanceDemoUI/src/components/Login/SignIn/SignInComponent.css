@@ -1,71 +1,37 @@
-html,
-body {
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100%;
-  font-family: "Numans", sans-serif;
-}
-
-.signIn {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 50vh;
-}
-
-.card {
-  height: 350px;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 400px;
-  background-color: #222 !important;
-}
-
-.card-header h3 {
-  color: white;
-}
-
-.login_btn {
-  color: white !important;
-  background-color: #ea4f4c !important;
-  width: 100px !important;
-  border: none !important;
-  font-family: "Roboto", sans-serif !important;
-  font-weight: 400;
-  font-size: larger;
-}
-
-.login_btn:hover {
-  color: black !important;
-  background-color: white !important;
-}
-
-.input-group-prepend span {
-  width: 50px !important;
-  background-color: #ea4f4c !important;
-  color: black !important;
-  border: 0 !important;
-}
-
-input:focus {
-  outline: 0 0 0 0 !important;
-  box-shadow: 0 0 0 0 !important;
-}
-
-.links {
-  color: white !important;
-}
-
-.links a {
-  margin-left: 4px !important;
-}
-
 .custom-signIn {
   text-decoration: none;
-  color: #ea4f4c;
+  color: #024959;
   transition: color 0.3s ease;
+  font-weight: 700;
 }
 
 .custom-signIn:hover {
-  color: #ec0c08;
+  color: #024959;
+}
+
+.bg-image-vertical {
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 100%;
+}
+
+.company-icon {
+  color: #c43302;
+  font-size: 50px;
+  text-align: center;
+  justify-content: center;
+  margin-right: 150px;
+}
+
+.custom-image {
+  height: 75vh;
+  width: 70vh;
+}
+
+@media (min-width: 1025px) {
+  .h-custom-2 {
+    height: 100%;
+  }
 }

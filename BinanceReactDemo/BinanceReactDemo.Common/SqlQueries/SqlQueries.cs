@@ -13,7 +13,7 @@
         /// <summary>
         /// Get All Coins By Id Query
         /// </summary>
-        public const string GetAllCoinsByIdQuery = "SELECT cus.Id AS OperationId,cus.CustomerName,buy.CoinName AS BuyCoinName,sell.CoinName AS SellCoinName,CAST(buy.CoinValue AS FLOAT) AS BuyCoinValue,CAST(sell.CoinValue AS FLOAT) AS SellCoinValue,Cast(buy.CustomerBuyValue AS FLOAT) AS BuyCustomerValue,Cast(sell.CustomerSellValue AS FLOAT) AS SellCustomerValue,Cast(buy.SumOfValue AS FLOAT) AS BuySumOfValue,Cast(sell.SumOfValue AS FLOAT) AS SellSumOfValue,(Cast(buy.SumOfValue AS FLOAT) - Cast(sell.SumOfValue AS FLOAT)) AS [Differences],buy.BuyDate,sell.SellDate FROM BuyCoin AS buy WITH (NOLOCK) INNER JOIN SellCoin AS sell ON buy.CustomerId = sell.CustomerId INNER JOIN Customer AS cus ON buy.CustomerId = cus.Id WHERE buy.CustomerId = 1 ORDER BY OperationId DESC";
+        public const string GetAllCoinsByIdQuery = "SELECT cus.Id AS OperationId,cus.CustomerName,buy.CoinName AS BuyCoinName,sell.CoinName AS SellCoinName,CAST(buy.CoinValue AS FLOAT) AS BuyCoinValue,CAST(sell.CoinValue AS FLOAT) AS SellCoinValue,Cast(buy.CustomerBuyValue AS FLOAT) AS BuyCustomerValue,Cast(sell.CustomerSellValue AS FLOAT) AS SellCustomerValue,Cast(buy.SumOfValue AS FLOAT) AS BuySumOfValue,Cast(sell.SumOfValue AS FLOAT) AS SellSumOfValue,(Cast(buy.SumOfValue AS FLOAT) - Cast(sell.SumOfValue AS FLOAT)) AS [Differences],buy.BuyDate,sell.SellDate FROM BuyCoin AS buy WITH (NOLOCK) INNER JOIN SellCoin AS sell ON buy.CustomerId = sell.CustomerId INNER JOIN Customer AS cus ON buy.CustomerId = cus.Id WHERE buy.CustomerId = @customerId ORDER BY buy.BuyDate DESC, sell.SellDate DESC";
 
         /// <summary>
         /// Get Buy Coins By Id Query

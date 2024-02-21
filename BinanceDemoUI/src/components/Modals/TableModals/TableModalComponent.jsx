@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table";
 import "../TableModals/TableModalComponent.css";
 import { AuthService } from "../../../requestServices";
 import { DecryptData } from "../../../DecryptionUtils/DecryptionUtility";
-import Pagination from "react-bootstrap/Pagination";
+import PaginationComponent from "../../Pagination/PaginationComponent";
 
 function TableModalComponent({ showModal, setShowTableModal }) {
   const [activeTab, setActiveTab] = useState("buyCoin");
@@ -104,33 +104,10 @@ function TableModalComponent({ showModal, setShowTableModal }) {
           ))}
         </tbody>
       </Table>
-      <Pagination>
-        <Pagination.First onClick={() => handlePageChange(1)} />
-        <Pagination.Prev
-          onClick={() =>
-            handlePageChange(activePage > 1 ? activePage - 1 : activePage)
-          }
-        />
-
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <Pagination.Item
-            key={index}
-            active={index + 1 === activePage}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Pagination.Item>
-        ))}
-
-        <Pagination.Next
-          onClick={() =>
-            handlePageChange(
-              activePage < totalPages ? activePage + 1 : activePage
-            )
-          }
-        />
-        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-      </Pagination>
+      <PaginationComponent
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 
@@ -162,33 +139,10 @@ function TableModalComponent({ showModal, setShowTableModal }) {
           ))}
         </tbody>
       </Table>
-      <Pagination>
-        <Pagination.First onClick={() => handlePageChange(1)} />
-        <Pagination.Prev
-          onClick={() =>
-            handlePageChange(activePage > 1 ? activePage - 1 : activePage)
-          }
-        />
-
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <Pagination.Item
-            key={index}
-            active={index + 1 === activePage}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Pagination.Item>
-        ))}
-
-        <Pagination.Next
-          onClick={() =>
-            handlePageChange(
-              activePage < totalPages ? activePage + 1 : activePage
-            )
-          }
-        />
-        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-      </Pagination>
+      <PaginationComponent
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 
@@ -201,7 +155,6 @@ function TableModalComponent({ showModal, setShowTableModal }) {
           item.buyCoinValue !== undefined ? "buyCoin" : "sellCoin"
         }`}
       >
-        <td>{item.operationId}</td>
         <td>{item.customerName}</td>
         <td>{item.buyCoinName}</td>
         <td>{item.sellCoinName}</td>
@@ -222,7 +175,6 @@ function TableModalComponent({ showModal, setShowTableModal }) {
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
-            <th>Operation Id</th>
             <th>Customer Name</th>
             <th>Buy Coin Name</th>
             <th>Sell Coin Name</th>
@@ -239,33 +191,10 @@ function TableModalComponent({ showModal, setShowTableModal }) {
         </thead>
         <tbody>{tableRows}</tbody>
       </Table>
-      <Pagination>
-        <Pagination.First onClick={() => handlePageChange(1)} />
-        <Pagination.Prev
-          onClick={() =>
-            handlePageChange(activePage > 1 ? activePage - 1 : activePage)
-          }
-        />
-
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <Pagination.Item
-            key={index}
-            active={index + 1 === activePage}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Pagination.Item>
-        ))}
-
-        <Pagination.Next
-          onClick={() =>
-            handlePageChange(
-              activePage < totalPages ? activePage + 1 : activePage
-            )
-          }
-        />
-        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-      </Pagination>
+      <PaginationComponent
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 
@@ -301,7 +230,10 @@ function TableModalComponent({ showModal, setShowTableModal }) {
               <Nav
                 variant="tabs"
                 activeKey={activeTab}
-                onSelect={(key) => setActiveTab(key)}
+                onSelect={(key) => {
+                  setActiveTab(key);
+                  setActivePage(1);
+                }}
               >
                 <Nav.Item className="navLink">
                   <Nav.Link eventKey="buyCoin">Get Customer Buy Coins</Nav.Link>
