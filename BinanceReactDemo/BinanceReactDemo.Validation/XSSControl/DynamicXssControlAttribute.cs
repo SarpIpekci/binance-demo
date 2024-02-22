@@ -12,7 +12,7 @@ namespace BinanceReactDemo.Validation.XSSControl
     [AttributeUsage(AttributeTargets.Method)]
     public class DynamicXssControlAttribute: ActionFilterAttribute
     {
-        private const string pattern = @"('|""|--|\/\*|\*\/|;|\b(ALTER|CREATE|DELETE|DROP|SELECT|INSERT|UPDATE|TRUNCATE|REPLACE|GRANT|REVOKE|LOAD|CALL)\b)";
+        private const string pattern = @"('|--|\/\*|\*\/|;|\b(ALTER|CREATE|DELETE|DROP|SELECT|INSERT|UPDATE|TRUNCATE|REPLACE|GRANT|REVOKE|LOAD|CALL)\b)";
 
         /// <summary>
         /// Dynamic XSS Attribute

@@ -58,18 +58,52 @@ const SignInComponent = () => {
       .replace(/ğ/g, "g");
   }
 
+  const checkPasswordStrength = (password) => {
+    let strength = 0;
+
+    if (/[A-Z]/.test(password)) {
+      strength++;
+    }
+
+    if (/[!@#$%^&*]/.test(password)) {
+      strength++;
+    }
+
+    if (/[0-9]/.test(password)) {
+      strength++;
+    }
+
+    if (password.length >= 8 && password.length <= 16) {
+      strength++;
+    }
+
+    return strength >= 4 ? 3 : strength;
+  };
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
     setShowModal(true);
     setIsLoading(true);
-    if (!username || !password) {
+    let errors = [];
+
+    if (!username) errors.push("Username or Password is required.");
+    if (!password) errors.push("Username or Password is required.");
+
+    const passwordStrength = checkPasswordStrength(password);
+    if (passwordStrength < 3 || password.length > 16) {
+      errors.push("Username or Password is wrong.");
+    }
+
+    if (errors.length > 0) {
       setShowSwal(true);
-      setErrorMessages("Username or Password is required.");
+      setErrorMessages(errors);
       setIcon("error");
       setIsLoading(false);
       setShowModal(false);
+      setPassword("");
       return;
     }
+
     AuthService.signIn(username, password)
       .then((rest) => {
         const jsonData = JSON.stringify(rest);

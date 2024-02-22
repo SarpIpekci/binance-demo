@@ -53,35 +53,41 @@ const BarChartComponent = ({ setUserData, userDataValue }) => {
     const parsedData = JSON.parse(updatedData);
     const symbols = parsedData.map((entry) => entry.symbol);
     const prices = parsedData.map((entry) => entry.price);
-    let datasetColors = [];
-    const newData = {
-      labels: symbols,
-      datasets: [
-        {
-          data: prices,
-          backgroundColor: datasetColors,
-        },
-      ],
-    };
 
     const chart = chartReference.current;
-    setData(newData);
 
-    if (chart.data.datasets.length === 0) {
-      chart.update();
-    } else {
-      prices.forEach((price, index) => {
-        let previousPrice = chart.data.datasets[0].data[index];
-        if (price > previousPrice) {
-          datasetColors.push("#267365");
-        } else if (price < previousPrice) {
-          datasetColors.push("#F23030");
-        } else {
-          datasetColors.push(chart.data.datasets[0].backgroundColor[index]);
-        }
-      });
+    const newBackgroundColors = prices.map((price, index) => {
+      if (
+        !chart.data.datasets[0] ||
+        chart.data.datasets[0].data.length <= index
+      ) {
+        return "#21618C";
+      }
+      const previousPrice = chart.data.datasets[0].data[index];
+      if (price > previousPrice) {
+        return "#267365";
+      } else if (price < previousPrice) {
+        return "#F23030";
+      } else {
+        return chart.data.datasets[0].backgroundColor[index];
+      }
+    });
+
+    if (chart.data.datasets.length > 0) {
+      chart.data.labels = symbols;
       chart.data.datasets[0].data = prices;
-      chart.data.datasets[0].backgroundColor = datasetColors;
+      chart.data.datasets[0].backgroundColor = newBackgroundColors;
+    } else {
+      chart.data = {
+        labels: symbols,
+        datasets: [
+          {
+            data: prices,
+            backgroundColor: newBackgroundColors,
+            label: "Coin Prices",
+          },
+        ],
+      };
     }
 
     chart.update();
