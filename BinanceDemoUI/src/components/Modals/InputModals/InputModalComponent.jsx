@@ -17,12 +17,6 @@ function InputModalComponent({
   buttonName,
   buttonStyle,
 }) {
-  const handleClose = () => {
-    setShowModal(false);
-    setDoubleValue(1);
-    setCoinValue(0);
-    setSelectedItem("Please Select Coin");
-  };
   const [doubleValue, setDoubleValue] = useState(1);
   const [coinValue, setCoinValue] = useState(0);
   const [selectedItem, setSelectedItem] = useState("Please Select Coin");
@@ -30,7 +24,6 @@ function InputModalComponent({
   const [isLoading, setIsLoading] = useState(false);
   const [showSwal, setShowSwal] = useState(false);
   const [icon, setIcon] = useState();
-  const [title, setTitle] = useState();
   const [errorMessages, setErrorMessages] = useState([]);
 
   let sumOfCoin;
@@ -83,6 +76,13 @@ function InputModalComponent({
     ...binanceItem,
   ];
 
+  const handleClose = () => {
+    setShowModal(false);
+    setSelectedItem("Please Select Coin");
+    setDoubleValue(1);
+    setCoinValue(0);
+  };
+
   const buyService = () => {
     setShowModal(true);
     setIsLoading(true);
@@ -98,14 +98,13 @@ function InputModalComponent({
         setShowModalLoading(false);
         setShowSwal(true);
         setIcon("success");
-        setTitle(rest.message);
+        setErrorMessages(rest.message);
       })
       .catch((error) => {
         setIsLoading(false);
         setShowModalLoading(false);
         setShowModal(true);
         setErrorMessages(error.message);
-        setTitle("Buy");
         setIcon("error");
       });
   };
@@ -124,15 +123,13 @@ function InputModalComponent({
         setIsLoading(false);
         setShowModalLoading(false);
         setShowSwal(true);
-        setTitle("Sell");
         setIcon("success");
-        setTitle(rest.message);
+        setErrorMessages(rest.message);
       })
       .catch((error) => {
         setIsLoading(false);
         setShowModalLoading(false);
         setShowSwal(true);
-        setTitle("Sell");
         setIcon("error");
         setErrorMessages(error.message);
       });
@@ -244,7 +241,7 @@ function InputModalComponent({
                 type="submit"
                 style={{ backgroundColor: buttonStyle, border: "none" }}
                 variant="success"
-                onClick={handleClose}
+                onHide={handleClose}
               >
                 {buttonName}
               </Button>
@@ -260,7 +257,6 @@ function InputModalComponent({
       <SwalComponent
         showSwal={showSwal}
         errorMessages={errorMessages}
-        title={title}
         icon={icon}
         confirmCallBack={() => setShowSwal(false)}
       />
