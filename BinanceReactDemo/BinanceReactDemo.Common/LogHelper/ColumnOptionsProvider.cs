@@ -30,9 +30,6 @@ namespace BinanceReactDemo.Common.LogHelper
             columnOptions.Properties.ColumnName = "Properties";
             columnOptions.LogEvent.ExcludeAdditionalProperties = true;
 
-            columnOptions.Properties.ColumnName = "LogEvent";
-            columnOptions.Exception.DataLength = 2048;
-
             return columnOptions;
         }
     }

@@ -91,17 +91,25 @@ function TableModalComponent({ showModal, setShowTableModal }) {
           </tr>
         </thead>
         <tbody>
-          {buyCoinResult.slice(startIndex, endIndex).map((item, index) => (
-            <tr key={item.operationId}>
-              <td>{item.operationId}</td>
-              <td>{item.customerName}</td>
-              <td>{item.coinName}</td>
-              <td>{item.coinValue}</td>
-              <td>{item.customerBuyValue}</td>
-              <td>{item.sumOfValue.toFixed(2)}</td>
-              <td>{formatDate(item.buyDate)}</td>
+          {buyCoinResult.slice(startIndex, endIndex).length > 0 ? (
+            buyCoinResult.slice(startIndex, endIndex).map((item, index) => (
+              <tr key={item.operationId}>
+                <td>{item.operationId}</td>
+                <td>{item.customerName}</td>
+                <td>{item.coinName}</td>
+                <td>{item.coinValue}</td>
+                <td>{item.customerBuyValue}</td>
+                <td>{item.sumOfValue.toFixed(2)}</td>
+                <td>{formatDate(item.buyDate)}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" style={{ height: "150px" }}>
+                <div className="no-records">No Records</div>
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
       <PaginationComponent
@@ -126,17 +134,25 @@ function TableModalComponent({ showModal, setShowTableModal }) {
           </tr>
         </thead>
         <tbody>
-          {sellCoinResult.slice(startIndex, endIndex).map((item, index) => (
-            <tr key={item.operationId}>
-              <td>{item.operationId}</td>
-              <td>{item.customerName}</td>
-              <td>{item.coinName}</td>
-              <td>{item.coinValue}</td>
-              <td>{item.customerSellValue}</td>
-              <td>{item.sumOfValue.toFixed(2)}</td>
-              <td>{formatDate(item.sellDate)}</td>
+          {sellCoinResult.slice(startIndex, endIndex).length > 0 ? (
+            sellCoinResult.slice(startIndex, endIndex).map((item, index) => (
+              <tr key={item.operationId}>
+                <td>{item.operationId}</td>
+                <td>{item.customerName}</td>
+                <td>{item.coinName}</td>
+                <td>{item.coinValue}</td>
+                <td>{item.customerSellValue}</td>
+                <td>{item.sumOfValue.toFixed(2)}</td>
+                <td>{formatDate(item.sellDate)}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" style={{ height: "150px" }}>
+                <div className="no-records">No Records</div>
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
       <PaginationComponent
@@ -146,29 +162,36 @@ function TableModalComponent({ showModal, setShowTableModal }) {
     </div>
   );
 
-  const tableRows = allCoinResult
-    .slice(startIndex, endIndex)
-    .map((item, index) => (
-      <tr
-        key={index}
-        className={`${
-          item.buyCoinValue !== undefined ? "buyCoin" : "sellCoin"
-        }`}
-      >
-        <td>{item.customerName}</td>
-        <td>{item.buyCoinName}</td>
-        <td>{item.sellCoinName}</td>
-        <td>{item.buyCoinValue}</td>
-        <td>{item.sellCoinValue}</td>
-        <td>{item.buyCustomerValue}</td>
-        <td>{item.sellCustomerValue}</td>
-        <td>{item.buySumOfValue.toFixed(2)}</td>
-        <td>{item.sellSumOfValue.toFixed(2)}</td>
-        <td>{item.differences.toFixed(2)}</td>
-        <td>{formatDate(item.buyDate)}</td>
-        <td>{formatDate(item.sellDate)}</td>
+  const tableContent =
+    allCoinResult.slice(startIndex, endIndex).length > 0 ? (
+      allCoinResult.slice(startIndex, endIndex).map((item, index) => (
+        <tr
+          key={index}
+          className={`${
+            item.buyCoinValue !== undefined ? "buyCoin" : "sellCoin"
+          }`}
+        >
+          <td>{item.customerName}</td>
+          <td>{item.buyCoinName}</td>
+          <td>{item.sellCoinName}</td>
+          <td>{item.buyCoinValue}</td>
+          <td>{item.sellCoinValue}</td>
+          <td>{item.buyCustomerValue}</td>
+          <td>{item.sellCustomerValue}</td>
+          <td>{item.buySumOfValue.toFixed(2)}</td>
+          <td>{item.sellSumOfValue.toFixed(2)}</td>
+          <td>{item.differences.toFixed(2)}</td>
+          <td>{formatDate(item.buyDate)}</td>
+          <td>{formatDate(item.sellDate)}</td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="12" style={{ height: "150px" }}>
+          <div className="no-records">No Records</div>
+        </td>
       </tr>
-    ));
+    );
 
   const allCoinContent = (
     <div>
@@ -189,7 +212,7 @@ function TableModalComponent({ showModal, setShowTableModal }) {
             <th>Sell Date</th>
           </tr>
         </thead>
-        <tbody>{tableRows}</tbody>
+        <tbody>{tableContent}</tbody>
       </Table>
       <PaginationComponent
         totalPages={totalPages}
