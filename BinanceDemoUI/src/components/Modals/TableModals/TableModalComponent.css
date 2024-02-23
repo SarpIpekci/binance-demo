@@ -50,3 +50,14 @@
 .page-item:hover .page-link {
   color: #024959 !important;
 }
+
+.no-records {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: white;
+  font-weight: 700;
+  color: #024959;
+  font-family: "Roboto", sans-serif;
+}
