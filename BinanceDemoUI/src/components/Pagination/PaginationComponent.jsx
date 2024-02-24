@@ -22,26 +22,16 @@ const PaginationComponent = ({ totalPages, onPageChange }) => {
       </Pagination.Item>
     );
 
+    let startPage, endPage;
     if (totalPages <= 10) {
-      for (let page = 2; page <= totalPages; page++) {
-        items.push(
-          <Pagination.Item
-            key={page}
-            active={activePage === page}
-            onClick={() => handlePageChange(page)}
-          >
-            {page}
-          </Pagination.Item>
-        );
-      }
+      startPage = 2;
+      endPage = totalPages;
     } else {
-      let startPage = Math.max(2, activePage - 4);
-      let endPage = Math.min(totalPages - 1, activePage + 4);
-
+      startPage = Math.max(2, activePage - 4);
+      endPage = Math.min(totalPages - 1, activePage + 4);
       if (activePage < 5) {
         endPage = 9;
       }
-
       if (activePage > totalPages - 5) {
         startPage = totalPages - 8;
       }
@@ -49,33 +39,35 @@ const PaginationComponent = ({ totalPages, onPageChange }) => {
       if (startPage > 2) {
         items.push(<Pagination.Ellipsis key="ellipsis-start" />);
       }
-
-      for (let page = startPage; page <= endPage; page++) {
-        items.push(
-          <Pagination.Item
-            key={page}
-            active={activePage === page}
-            onClick={() => handlePageChange(page)}
-          >
-            {page}
-          </Pagination.Item>
-        );
-      }
-
-      if (endPage < totalPages - 1) {
-        items.push(<Pagination.Ellipsis key="ellipsis-end" />);
-      }
     }
 
-    items.push(
-      <Pagination.Item
-        key="last"
-        active={activePage === totalPages}
-        onClick={() => handlePageChange(totalPages)}
-      >
-        {totalPages}
-      </Pagination.Item>
-    );
+    for (let page = startPage; page <= endPage; page++) {
+      items.push(
+        <Pagination.Item
+          key={page}
+          active={activePage === page}
+          onClick={() => handlePageChange(page)}
+        >
+          {page}
+        </Pagination.Item>
+      );
+    }
+
+    if (totalPages > 10 && endPage < totalPages - 1) {
+      items.push(<Pagination.Ellipsis key="ellipsis-end" />);
+    }
+
+    if (totalPages > 10) {
+      items.push(
+        <Pagination.Item
+          key="last"
+          active={activePage === totalPages}
+          onClick={() => handlePageChange(totalPages)}
+        >
+          {totalPages}
+        </Pagination.Item>
+      );
+    }
 
     return items;
   };
