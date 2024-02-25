@@ -35,11 +35,7 @@ namespace BinanceReactDemo.Business.Concrete.SignUp
 
             unitOfWork.OpenConnection();
 
-            unitOfWork.BeginTransaction();
-
             var createCustomer = await unitOfWork.SignUpRepository.CreateCustomerAsync(signUp);
-
-            unitOfWork.CommitTransaction();
 
             unitOfWork.CloseConnection();
 

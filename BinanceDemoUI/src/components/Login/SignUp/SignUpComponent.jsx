@@ -82,6 +82,20 @@ const SignUpComponent = () => {
     return strength >= 4 ? 3 : strength;
   };
 
+  function cleanTurkishCharacters(str) {
+    return str
+      .replace(/İ/g, "I")
+      .replace(/ı/g, "i")
+      .replace(/Ö/g, "O")
+      .replace(/ö/g, "o")
+      .replace(/Ç/g, "C")
+      .replace(/ç/g, "c")
+      .replace(/Ş/g, "S")
+      .replace(/ş/g, "s")
+      .replace(/Ğ/g, "G")
+      .replace(/ğ/g, "g");
+  }
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
     let errors = [];
@@ -107,8 +121,9 @@ const SignUpComponent = () => {
     }
     setShowModal(true);
     setIsLoading(true);
+    const cleanCustomerName = cleanTurkishCharacters(customerName);
     AuthService.signUp(
-      customerName,
+      cleanCustomerName,
       customerEmail,
       username,
       password,
