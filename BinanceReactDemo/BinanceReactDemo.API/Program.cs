@@ -21,7 +21,6 @@ using BinanceReactDemo.Validation;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +58,7 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
     loggerConfiguration
         .ReadFrom.Configuration(hostingContext.Configuration)
         .WriteTo.MSSqlServer(
-            connectionString: hostingContext.Configuration.GetConnectionString("SqlConnection"),
+            connectionString: Environment.GetEnvironmentVariable(hostingContext.Configuration.GetConnectionString("SqlConnection") ?? string.Empty),
             sinkOptions: new MSSqlServerSinkOptions
             {
                 TableName = "Logs",
