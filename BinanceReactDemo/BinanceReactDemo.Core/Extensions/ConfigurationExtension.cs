@@ -33,7 +33,7 @@ namespace BinanceReactDemo.Core.Extensions
         /// <returns></returns>
         public static string GetConnectionString()
         {
-            return GetConfiguration().GetSection("ConnectionStrings:SqlConnection").Value;
+            return Environment.GetEnvironmentVariable(GetConfiguration().GetSection("ConnectionStrings:SqlConnection").Value) ?? string.Empty;
         }
     }
 }
